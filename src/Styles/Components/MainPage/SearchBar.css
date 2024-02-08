@@ -1,0 +1,155 @@
+/* .search-container {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .search-form {
+    display: flex;
+  }
+  
+  .search-input {
+    padding: 10px 20px;
+    width: 300px; 
+    background: #121212; 
+    border: 2px solid #3498db;
+    color: white;
+    border-radius: 24px 0 0 24px; 
+    transition: all 0.25s;
+    outline: none;
+  }
+  
+  .search-input:focus {
+    border-color: #2ecc71; 
+  }
+  
+  .search-button {
+    padding: 10px 20px;
+    background-color: #121212;
+    border: 2px solid #2ecc71; 
+    color: white;
+    border-radius: 0 24px 24px 0; 
+    transition: background-color 0.25s, border-color 0.25s;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .search-button:hover {
+    background-color: #2ecc71; 
+    border-color: #27ae60; 
+  }
+  
+
+  body, html {
+    height: 100%;
+    margin: 0; 
+    color: white; 
+    font-family: Arial, sans-serif; 
+  }
+   */
+
+   /* .dark-theme-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #121212; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200; 
+} 
+*/
+
+.search-container {
+  width: 100%; /* Full width to center the form */
+  max-width: 600px; /* Maximum width of the search bar */ /* Adjust the position of the search bar */
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-form {
+  position: relative; /* Establish this element as the positioning context for the results */
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Make the form take full width of its parent */
+}
+
+.search-input {
+  padding: 10px 20px;
+  width: 300px; /* Set the initial width for the input */
+  background: #121212; /* Dark input field */
+  border: 2px solid #3498db; /* Blue border */
+  color: white;
+  border-radius: 24px 0 0 24px; /* Rounded left side */
+  transition: all 0.25s;
+  outline: none;
+  flex-grow: 1; /* Allow it to grow to fill the space */
+  margin-right: -1px; /* Overlap with the search button */
+}
+
+.search-input:focus {
+  border-color: #2ecc71; /* Green border on focus */
+}
+
+.search-button {
+  margin-left: -1px; /* Overlap with the search input */
+  padding: 10px 20px;
+  background-color: #121212; /* Dark background for the button */
+  border: 2px solid #2ecc71; /* Green border */
+  color: white;
+  border-radius: 0 24px 24px 0; /* Rounded right side */
+  transition: background-color 0.25s, border-color 0.25s;
+  cursor: pointer;
+  outline: none;
+}
+
+.search-button:hover {
+  background-color: #2ecc71; /* Green background on hover */
+  border-color: #27ae60; /* Darker green border on hover */
+}
+
+/* Other styles remain unchanged */
+
+.search-results {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background: #333;
+  position: absolute;
+  top: 100%; /* This will position the dropdown right below the search form */
+  left: 0;
+  right: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 4px 4px;
+  z-index: 3; /* Ensure it's above the input and button */
+  overflow: hidden; /* Hide overflow to maintain the border-radius */
+}
+
+/* Rest of the styles remain unchanged */
+
+
+.search-result-item {
+  padding: 10px 20px;
+  color: white;
+  border-bottom: 1px solid #474747;
+  cursor: pointer;
+  background: #121212; /* Match the input field's background */
+  /* Rest of the styles */
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+.search-result-item:hover {
+  background-color: #555;
+}

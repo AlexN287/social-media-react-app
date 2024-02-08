@@ -1,0 +1,210 @@
+/* .sidebar-menu {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 70px; 
+  height: 100vh; 
+  background-color: #000; 
+  color: #fff; 
+  padding: 20px; 
+  font-family: 'Arial', sans-serif; 
+  overflow-y: auto; 
+  z-index: 1000; 
+}
+
+.menu-items {
+  list-style: none; 
+  padding: 0; 
+}
+
+.menu-items li {
+  padding: 10px 0; 
+  display: flex; 
+  
+}
+
+.menu-items li a {
+  text-decoration: none;
+  color: #fff;
+  display: block; 
+  width: 100%;
+  padding: 10px 20px; 
+  transition: background-color 0.3s ease; 
+  border-radius: 10px;
+  border: 2px solid #3498db;
+}
+
+.menu-items li a:hover {
+  background-color: #2ecc71; 
+  border-color: #2ecc71;
+  
+} */
+
+.message-count {
+  background-color: red; /* Background color for message count bubble */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px; /* Adjust padding as needed */
+  font-size: 12px; /* Adjust font size as needed */
+  margin-left: 5px; /* Space between message text and count bubble */
+}
+
+/* ChatPage.css */
+.chat-container {
+  background-color: #1e1e1e;
+  margin-left: 40px; /* Set this to the width of your sidebar menu plus any desired additional space */
+  width: 30%; /* Adjust the width to take the sidebar's width into account */
+  height: 100vh;
+  overflow-y:auto;
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed; /* Optional, for positioning context */
+  left: 70px;
+  top: 0;
+}
+
+
+.chats-header {
+  color: #3498db;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chats-header h2 {
+  margin: 0;
+}
+
+.chats-search {
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+}
+
+.chats-search input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 2px solid #3498db;;
+  background: none;
+  
+}
+
+.chat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #1e1e1e; /* Light background for each chat item */
+  margin-bottom: 10px; /* Space between chat items */
+  transition: background-color 0.3s ease;
+  border: 2px solid #2ecc71 /* Smooth transition for hover effect */
+}
+
+.chat-item:hover {
+  background-color: #e9e9e9; /* Darker background on hover */
+}
+
+.chat-avatar {
+  margin-right: 10px;
+  /* Style your avatar image here */
+}
+
+.chat-info {
+  flex-grow: 1;
+}
+
+.chat-name {
+  color: white;
+  margin: 0;
+  font-weight: bold;
+}
+
+.chat-message {
+  margin: 0;
+  color: rgb(219, 208, 208);
+}
+
+.chat-time {
+  /* Style for the time text */
+}
+
+/* Conversation.css */
+.conversation-container {
+  background-color: #1e1e1e;
+  position: fixed;
+  left: 570px;
+  height: 100vh;
+  top: 0;
+  width: 133vh;
+  flex-grow: 1; /* Take up the remaining space next to the sidebar */
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  border-left: 1px solid #ccc; /* Add a border between this view and the chats menu */
+}
+
+.conversation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.messages-list {
+  flex-grow: 1;
+  overflow-y: auto; /* Allow scrolling */
+  padding: 10px;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 5px 10px;
+  border-radius: 20px;
+  max-width: 60%; /* Adjust width of message bubbles */
+}
+
+.message.them {
+  background-color: #f0f0f0; /* Different background for 'them' */
+  align-self: flex-start; /* Align 'them' messages to the left */
+}
+
+.message.you {
+  background-color: #007bff; /* Different background for 'you' */
+  color: white;
+  align-self: flex-end; /* Align 'you' messages to the right */
+}
+
+.message-time {
+  display: block; /* New line */
+  text-align: right;
+  font-size: 0.75rem;
+  margin-top: 5px;
+}
+
+.conversation-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.conversation-input input {
+  flex-grow: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.conversation-input button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: white;
+}

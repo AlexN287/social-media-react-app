@@ -1,0 +1,70 @@
+.sidebar-menu {
+  position: fixed; /* Fix the sidebar to the viewport */
+  top: 0; /* Align to the top of the viewport */
+  left: 0; /* Align to the left of the viewport */
+  width: 250px; /* Adjust width as needed */
+  height: 100vh; /* Make the sidebar full height */
+  background-color: #000; /* Your desired background color */
+  color: #fff; /* Text color */
+  padding: 20px; /* Padding around the entire menu */
+  font-family: 'Arial', sans-serif; /* Your desired font */
+  overflow-y: auto; /* Enable scrolling if content is taller than the screen */
+  z-index: 1000; /* Make sure the sidebar is above other content */
+}
+
+.menu-title {
+  font-size: 24px; /* Adjust size as needed */
+  margin-bottom: 30px; /* Space below the title */
+  text-align: center; /* Center the title */
+  background: -webkit-linear-gradient(to right, #b92b27, #1565c0); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #b92b27, #1565c0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text; /* Chrome on macOS and iOS */
+  background-clip: text;
+  color: transparent; /* Make the text color transparent to show the gradient */
+}
+
+.menu-items {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+}
+
+.menu-items li {
+  padding: 10px 0; /* Space above and below each item */
+  display: flex; /* Use flexbox for alignment */
+  
+}
+
+.menu-items li a {
+  text-decoration: none;
+  color: #fff;
+  display: block; /* Make the anchor a block-level element to fill the li */
+  width: 100%; /* Ensure it fills the full width */
+  padding: 10px 20px; /* Adjust padding as needed, ensuring it's symmetric */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  border-radius: 10px;
+  border: 2px solid #3498db;
+}
+
+.menu-items li a:hover {
+  background-color: #2ecc71; /* Darken the background on hover */
+  border-color: #2ecc71;
+  /* You can also change the text color, border, etc., on hover */
+}
+
+.icon {
+  /* Placeholder for the icons - replace with your own */
+}
+
+.message-count {
+  background-color: red; /* Background color for message count bubble */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px; /* Adjust padding as needed */
+  font-size: 12px; /* Adjust font size as needed */
+  margin-left: 5px; /* Space between message text and count bubble */
+}
+
+/* Specific styles for each icon class if using an icon library */
+/* .home-icon { } */
+/* .search-icon { } */
+/* ... etc. */

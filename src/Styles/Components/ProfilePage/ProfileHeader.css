@@ -1,0 +1,61 @@
+.profile-header {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: flex-start; /* Align items to the start of the container */
+    gap: 10px; /* Adds space between flex items */
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align children to the start */
+    margin-left: 12%;
+}
+
+.username-and-actions {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Adds space between items */
+}
+
+.user-stats {
+    display: flex;
+    gap: 20px; /* Adjust the gap as needed */
+    margin-top: 10px; /* Space above the stats */
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-button, .logout-button{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #2ecc71;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.edit-button:hover, .logout-button:hover{
+    background: #2ecc71;
+    transform: scale(1.05);
+    opacity: 0.8;
+}
