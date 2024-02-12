@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { request } from '../../Helper/AxiosHelper';
 import '../../Styles/Components/MainPage/SearchBar.css';
 
@@ -131,6 +132,7 @@ import '../../Styles/Components/MainPage/SearchBar.css';
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
 
   // Function to get token from local storage
   const getToken = () => {
@@ -182,6 +184,10 @@ const SearchBar = () => {
     }
   };
 
+  const handleUserClick = (userId) => {
+    navigate(`/profile/${userId}`); // Redirect to the user's profile page
+  };
+
   return (
     <div className="dark-theme-page">
       <div className="search-container">
@@ -198,9 +204,9 @@ const SearchBar = () => {
         {searchResults.length > 0 && (
           <ul className="search-results">
             {searchResults.map((user) => (
-              <li key={user.id} className="search-result-item">
-                {user.username}
-              </li>
+              <li key={user.id} className="search-result-item" onClick={() => handleUserClick(user.id)}>
+              {user.username}
+            </li>
             ))}
           </ul>
         )}

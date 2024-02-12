@@ -7,6 +7,7 @@ import SignIn from './Pages/Authentication/SignIn';
 import SignUp from './Pages/Authentication/SignUp';
 import MainPage from './Pages/MainPage';
 import ProfilePage from './Pages/Profile';
+import UserProfile from './Pages/UserProfile';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/home" element={<MainPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/myprofile" element={<ProfilePage/>} />
+        <Route path="/profile/:userId" element={<UserProfile />} />
       </Routes> 
     </Router>
     {/* <ChatPage/> */}
