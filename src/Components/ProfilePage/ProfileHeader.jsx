@@ -26,24 +26,24 @@ async function getLoggedUser(token) {
     }
 }
 
-// async function fetchUserProfileImage(userId, token) {
-//     try {
-//         const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         });
+async function fetchUserProfileImage(userId, token) {
+    try {
+        const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-//         return URL.createObjectURL(await response.blob());
-//     } catch (error) {
-//         console.error('Error fetching profile image:', error);
-//     }
-// }
+        return URL.createObjectURL(await response.blob());
+    } catch (error) {
+        console.error('Error fetching profile image:', error);
+    }
+}
 
 async function fetchNrOfPosts(userId, token) {
     try {
@@ -102,9 +102,9 @@ function ProfileHeader() {
             getLoggedUser(jwtToken).then(userData => {
                 if (userData && userData.username) {
                     setUsername(userData.username);
-                    // fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
-                    //     setProfileImage(imageUrl);
-                    // });
+                    fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
+                        setProfileImage(imageUrl);
+                    });
                     fetchNrOfPosts(userData.id, jwtToken).then(postsCount => {
                         setNrOfPosts(postsCount);
                     });
@@ -149,11 +149,20 @@ function ProfileHeader() {
         setActiveAction('');
     };
 
+    const updateProfile = (updatedUsername, updatedProfileImage) => {
+        if (updatedUsername) {
+            setUsername(updatedUsername);
+        }
+        if (updatedProfileImage) {
+            setProfileImage(updatedProfileImage);
+        }
+    };
+
     // Determine which component to render based on the active window
     const renderActionComponent = () => {
         switch (activeAction) {
             case 'editProfile':
-                return <EditProfile onClose={closeActionWindow} />;
+                return <EditProfile onSave={updateProfile} onClose={closeActionWindow} />;
             case 'changePassword':
                 return <ChangePassword onClose={closeActionWindow} />;
             // Handle other actions as necessary
@@ -166,11 +175,11 @@ function ProfileHeader() {
 
         <div className='main-container'>
             <div id="profile" className='profile-header'>
-                {/* {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>} */}
+                {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>}
                 <div className="user-info">
                     <div className='username-and-actions'>
                         <h1 className='username'>{username}</h1>
-                        <input type="submit" className='edit-button' value="Edit Username" onClick={toggleSlidingWindow} />
+                        <input type="submit" className='edit-button' value="Edit Profile" onClick={toggleSlidingWindow} />
 
                         <input onClick={handleLogout} type="submit" className='logout-button' value="Logout" />
                         {/* Include any other buttons you have here */}

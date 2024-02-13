@@ -1,0 +1,96 @@
+.edit-profile-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Adjust the gap between items as needed */
+    margin-top: 10%;
+}
+
+.submit-button, .cancel-button {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.submit-button{
+    border: 2px solid #2ecc71;
+}
+
+.cancel-button {
+    border: 2px solid #e10416;
+}
+
+.submit-button:hover, .cancel-button:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.submit-button:hover {
+    background: #2ecc71;
+}
+
+.cancel-button:hover {
+    background: #e10416;
+}
+
+.edit-profile-form [type="file"], .edit-profile-form [type="text"]{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 20px; 
+    width: 80%;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.edit-profile-form label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: medium;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    margin-top: 10px;
+    padding: 10px;
+    color: #e10416; /* Change color based on your design */
+    border: 1px solid #e10416; /* Optional */
+    border-radius: 5px; /* Optional */
+}
+
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    color: #2ecc71; /* Change color based on your design */
+    border: 1px solid #2ecc71; /* Optional */
+    border-radius: 5px; /* Optional */
+}
