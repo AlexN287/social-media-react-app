@@ -51,11 +51,7 @@
   /* You can also change the text color, border, etc., on hover */
 }
 
-.icon {
-  /* Placeholder for the icons - replace with your own */
-}
-
-.message-count {
+.notification-count {
   background-color: red; /* Background color for message count bubble */
   color: white;
   border-radius: 50%;
