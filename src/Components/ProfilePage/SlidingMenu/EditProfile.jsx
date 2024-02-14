@@ -136,7 +136,7 @@ const EditProfile = ({ onSave, onClose }) => {
                 <label>
                     {username}
                 </label>
-                {profileImagePreview && <img src={profileImagePreview} alt="Profile Image" className='profile-image' />} {/* Display the profile image if available */}
+                {profileImagePreview && <img src={profileImagePreview} alt="Profile" className='profile-image' />} {/* Display the profile image if available */}
                 <label>
                     Username:
                     <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />

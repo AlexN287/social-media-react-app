@@ -87,24 +87,24 @@ async function fetchUserDetails(userId, token) {
     }
 }
 
-async function fetchUserProfileImage(userId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+// async function fetchUserProfileImage(userId, token) {
+//     try {
+//         const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
+//             method: 'GET',
+//             headers: {
+//                 'Authorization': `Bearer ${token}`
+//             }
+//         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! status: ${response.status}`);
+//         }
 
-        return URL.createObjectURL(await response.blob());
-    } catch (error) {
-        console.error('Error fetching profile image:', error);
-    }
-}
+//         return URL.createObjectURL(await response.blob());
+//     } catch (error) {
+//         console.error('Error fetching profile image:', error);
+//     }
+// }
 
 async function checkIfUsersAreFriends(token, userId1, userId2) {
     const url = `http://localhost:8080/friendsList/checkFriendship?userId1=${userId1}&userId2=${userId2}`;

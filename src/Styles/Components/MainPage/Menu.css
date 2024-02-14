@@ -34,7 +34,7 @@
   
 }
 
-.menu-items li a {
+.menu-items li a, .menu-items li button {
   text-decoration: none;
   color: #fff;
   display: block; /* Make the anchor a block-level element to fill the li */
@@ -45,7 +45,13 @@
   border: 2px solid #3498db;
 }
 
-.menu-items li a:hover {
+.menu-items li button{
+  background: none;
+  cursor: pointer;
+  font-size: medium;
+}
+
+.menu-items li a:hover, .menu-items li button:hover {
   background-color: #2ecc71; /* Darken the background on hover */
   border-color: #2ecc71;
   /* You can also change the text color, border, etc., on hover */

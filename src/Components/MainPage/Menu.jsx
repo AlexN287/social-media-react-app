@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../../Styles/Components/MainPage/Menu.css';
-import Notification from './Notification'; 
+import Notification from './Notification';
 import axios from 'axios';
 
 const Menu = () => {
@@ -28,40 +28,48 @@ const Menu = () => {
         console.error('Error fetching number of friendship requests:', error);
       }
     };
-  
+
     fetchFriendshipRequestsCount();
   }, []);
-  
+
 
   return (
-
     <div className='menu-main-container'>
       <nav className="sidebar-menu">
-      <h1 className="menu-title">Social Media App</h1>
-      <ul className="menu-items">
-        <li><a href="/home"><span className="icon">🏠</span>Home</a></li>
-        <li className="messages">
-          <a href="#"><span className="icon">✉️</span>Messages<span className="notification-count">3</span></a>
-        </li>
-        <li>
-        <a href="#" onClick={toggleNotifications}>
-          <span className="icon">❤️</span>
-          Notifications
-          <span className="notification-count">{friendshipRequestsCount}</span>
-        </a>
-      </li>
-        <li><a href="#"><span className="icon">➕</span>Add a post</a></li>
-        <li><a href="/myprofile"><span className="icon">👤</span>My Profile</a></li>
-      </ul>
-    </nav>
+        <h1 className="menu-title">Social Media App</h1>
+        <ul className="menu-items">
+          <li>
+            <a href="/home">
+              <span className="icon" role="img" aria-label="Home">🏠</span>
+              Home
+            </a>
+          </li>
+          <li className="messages">
+            <a href="/home">
+              <span className="icon" role="img" aria-label="Messages">✉️</span>
+              Messages<span className="notification-count">3</span>
+            </a>
+          </li>
+          <li>
+            <button onClick={toggleNotifications}>
+              <span className="icon" role="img" aria-label="Notifications">❤️</span>
+              Notifications
+              <span className="notification-count">{friendshipRequestsCount}</span>
+            </button>
+          </li>
+          <li><a href="/home"><span className="icon" role="img" aria-label="Add a post">➕</span>Add a post</a></li>
+          <li><a href="/myprofile"><span className="icon" role="img" aria-label="My Profile">👤</span>My Profile</a></li>
+        </ul>
+      </nav>
 
-    {showNotifications && (
+      {showNotifications && (
         <div className="notifications-menu">
           <Notification onUpdate={decrementFriendshipRequestCount} />
         </div>
       )}
     </div>
-    
+
   );
+
 };
 export default Menu;
