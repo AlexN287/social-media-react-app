@@ -88,6 +88,7 @@
     padding-top: 20px;
     overflow-y: auto;
     transition: 0.5s; /* Slower transition on the transform */
+    border-right: 1px solid #2ecc71;
 }
 
 .sliding-menu {

@@ -1,0 +1,51 @@
+.blocked-users-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Adjust the gap between items as needed */
+    margin-top: 10%;
+    width: 100%;
+    max-height: 70%; /* Set a maximum height for your list */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.blocked-user-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #2ecc71 /* Optional */
+}
+
+.blocked-user-profile-image {
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+
+.blocked-user-username {
+    display: block;
+    color: white;
+    cursor: pointer;
+}
+
+.blocked-user-form button{
+    margin-right: 5px;
+    border-radius: 24px;
+    color: #fff;
+    background: none;
+    cursor: pointer;
+    border: 2px solid #e10416;
+}
+
+.blocked-user-form button:hover {
+    background-color: #e10416;
+}
+
+.no-blocked-users-message {
+    color: white;
+    text-align: center;
+    padding: 20px;
+}

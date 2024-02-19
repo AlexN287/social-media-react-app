@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../../Styles/Components/ProfilePage/ProfileHeader.css';
 import EditProfile from './SlidingMenu/EditProfile';
 import ChangePassword from './SlidingMenu/ChangePassword';
+import FriendsSettings from './SlidingMenu/FriendsSettings';
+import BlockedUsers from './SlidingMenu/BlockedUsers';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -67,6 +69,7 @@ async function fetchNrOfPosts(userId, token) {
 
 async function fetchNrOfFriends(userId, token) {
     try {
+        console.log('Nr of friends');
         const response = await fetch(`http://localhost:8080/friendsList/${userId}`, {
             method: 'GET',
             headers: {
@@ -102,9 +105,9 @@ function ProfileHeader() {
             getLoggedUser(jwtToken).then(userData => {
                 if (userData && userData.username) {
                     setUsername(userData.username);
-                    fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
-                        setProfileImage(imageUrl);
-                    });
+                    // fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
+                    //     setProfileImage(imageUrl);
+                    // });
                     fetchNrOfPosts(userData.id, jwtToken).then(postsCount => {
                         setNrOfPosts(postsCount);
                     });
@@ -158,6 +161,10 @@ function ProfileHeader() {
         }
     };
 
+    const updateFriendsNr = () => {
+        setNrOfFriends(nrOfFriends - 1);
+    }
+
     // Determine which component to render based on the active window
     const renderActionComponent = () => {
         switch (activeAction) {
@@ -165,7 +172,10 @@ function ProfileHeader() {
                 return <EditProfile onSave={updateProfile} onClose={closeActionWindow} />;
             case 'changePassword':
                 return <ChangePassword onClose={closeActionWindow} />;
-            // Handle other actions as necessary
+            case 'friendsSettings':
+                return <FriendsSettings onSave = {updateFriendsNr} onClose={closeActionWindow}/>
+            case 'blockedUsers':
+                return <BlockedUsers onClose={closeActionWindow} />
             default:
                 return null;
         }
@@ -175,7 +185,7 @@ function ProfileHeader() {
 
         <div className='main-container'>
             <div id="profile" className='profile-header'>
-                {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>}
+                {/* {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>} */}
                 <div className="user-info">
                     <div className='username-and-actions'>
                         <h1 className='username'>{username}</h1>
