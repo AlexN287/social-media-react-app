@@ -1,0 +1,57 @@
+.modal-overlay {
+  display: flex;
+  justify-content: center; /* Horizontally center the child content */
+  align-items: center; /* Vertically center the child content */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.modal-content {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Set max dimensions to ensure it doesn't fill the entire screen and remains centered */
+  max-width: 600px; /* Adjust as needed */
+  max-height: 80vh; /* Adjust as needed */
+  overflow-y: auto; /* Allows scrolling within the modal if content exceeds max-height */
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%; /* Take up more width on smaller screens */
+    max-height: 90vh; /* Allow more height for the content on smaller screens */
+  }
+}
+
+.modal-close{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    transform: scale(1);
+    opacity: 1;
+    border: 2px solid #e10416;
+}
+
+.modal-close:hover {
+  background-color: #e10416;
+}
+
+.creation-error-message {
+  color: red; /* Error messages are conventionally red */
+  text-align: center; /* Center the message */
+  margin: 10px 0; /* Add some spacing around the message */
+}

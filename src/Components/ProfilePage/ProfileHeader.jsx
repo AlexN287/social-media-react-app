@@ -105,9 +105,9 @@ function ProfileHeader() {
             getLoggedUser(jwtToken).then(userData => {
                 if (userData && userData.username) {
                     setUsername(userData.username);
-                    // fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
-                    //     setProfileImage(imageUrl);
-                    // });
+                    fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
+                        setProfileImage(imageUrl);
+                    });
                     fetchNrOfPosts(userData.id, jwtToken).then(postsCount => {
                         setNrOfPosts(postsCount);
                     });
@@ -185,7 +185,7 @@ function ProfileHeader() {
 
         <div className='main-container'>
             <div id="profile" className='profile-header'>
-                {/* {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>} */}
+                {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>}
                 <div className="user-info">
                     <div className='username-and-actions'>
                         <h1 className='username'>{username}</h1>

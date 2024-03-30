@@ -12,6 +12,11 @@
   z-index: 1000; /* Make sure the sidebar is above other content */
 }
 
+/* Additional styles for collapsed menu */
+.sidebar-menu.collapsed {
+  width: 70px; /* New width for collapsed menu */
+}
+
 .menu-title {
   font-size: 24px; /* Adjust size as needed */
   margin-bottom: 30px; /* Space below the title */
@@ -31,7 +36,6 @@
 .menu-items li {
   padding: 10px 0; /* Space above and below each item */
   display: flex; /* Use flexbox for alignment */
-  
 }
 
 .menu-items li a, .menu-items li button {

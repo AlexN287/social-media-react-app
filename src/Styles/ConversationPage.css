@@ -51,7 +51,7 @@
 
 /* ChatPage.css */
 .chat-container {
-  background-color: #1e1e1e;
+  background-color: #000;
   margin-left: 40px; /* Set this to the width of your sidebar menu plus any desired additional space */
   width: 30%; /* Adjust the width to take the sidebar's width into account */
   height: 100vh;
@@ -67,7 +67,7 @@
 .chats-header {
   color: #3498db;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Adjusted for centering */
   align-items: center;
 }
 
@@ -75,24 +75,51 @@
   margin: 0;
 }
 
-.chats-search {
+.chats-search-header {
   margin: 20px 0;
   display: flex;
   align-items: center;
+  justify-content: space-between; /* Adjusted to space out items */
 }
 
-.chats-search input {
+.add-conversation-btn {
+  width: 30px; /* Size of the circle */
+  height: 30px; /* Size of the circle */
+  border-radius: 50%; /* Makes the button a circle */
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  font-size: 24px; /* Adjust the size of the plus sign */
+  line-height: 30px; /* Center the plus sign vertically */
+  text-align: center; /* Center the plus sign horizontally */
+  border: none; /* Remove default border */
+  cursor: pointer; /* Change mouse cursor on hover */
+  outline: none; /* Remove outline to keep the UI clean */
+}
+
+/* Ensure the input and button are aligned nicely */
+.chats-search-header input, .add-conversation-btn {
+  margin-right: 10px;
+}
+
+/* Adjust this value as needed to prevent the last item from having a margin */
+.chats-search-header input:last-child, .add-conversation-btn:last-child {
+  margin-right: 0;
+}
+
+.chats-search-header input {
   width: 100%;
   padding: 10px;
   border-radius: 20px;
   border: 2px solid #3498db;;
   background: none;
+  color: #ccc;
   
 }
 
 .chat-list {
   list-style: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .chat-item {
@@ -131,12 +158,12 @@
 }
 
 .chat-time {
-  /* Style for the time text */
+  color: #ccc;
 }
 
 /* Conversation.css */
 .conversation-container {
-  background-color: #1e1e1e;
+  background-color: #000;
   position: fixed;
   left: 570px;
   height: 100vh;
@@ -145,15 +172,16 @@
   flex-grow: 1; /* Take up the remaining space next to the sidebar */
   display: flex;
   flex-direction: column; /* Stack elements vertically */
-  border-left: 1px solid #ccc; /* Add a border between this view and the chats menu */
+  border-left: 1px solid #2ecc71; /* Add a border between this view and the chats menu */
 }
 
 .conversation-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 10px;
-  border-bottom: 1px solid #ccc;
+  color: #fff;
+  border-bottom: 1px solid #2ecc71;
 }
 
 .messages-list {
@@ -190,7 +218,7 @@
 .conversation-input {
   display: flex;
   padding: 10px;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #2ecc71;
 }
 
 .conversation-input input {
@@ -207,4 +235,94 @@
   border-radius: 20px;
   background-color: #007bff;
   color: white;
+}
+
+.conversation-image {
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+
+.selection-circle {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc; /* Gray border for the circle */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.selection-circle.selected {
+  border-color: #007bff; /* Blue border for selected state */
+  background-color: #007bff; /* Blue background for selected state */
+  color: white; /* White checkmark */
+}
+
+.create-conversation-btn{
+  border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    transform: scale(1);
+    opacity: 1;
+    border: 2px solid #2ecc71;
+}
+
+.create-conversation-btn:hover {
+  background-color: #2ecc71;
+}
+
+.modal-add-conv-header {
+  color: #ccc;
+  text-align: center;
+}
+
+.modal-add-conv-ul {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers the items vertically */
+}
+
+.modal-add-conv-li{
+  display: flex;
+  justify-content: center; /* Centers the content horizontally */
+  align-items: center; /* Aligns items vertically */
+  color: white; /* Sets the text color to white */
+  cursor: pointer;
+  padding: 10px; /* Adds some spacing around each list item */
+  width: 100%; /* Ensures list items fill the container width */
+}
+
+.modal-add-conv-li:not(:last-child) {
+  border-bottom: 1px solid #007bff; /* Optional: adds a divider between items */
+}
+
+.group-name, .group-image{
+  border: 0;
+  background: none;
+  display: block;
+  margin: 5px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 10px 20px; 
+  width: 80%;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
 }

@@ -9,7 +9,7 @@ import SignUp from './Pages/Authentication/SignUp';
 import MainPage from './Pages/MainPage';
 import ProfilePage from './Pages/Profile';
 import UserProfile from './Pages/UserProfile';
-
+import ChatPage from './Pages/ConversationPage';
 
 function App() {
   // const [isCompact, setIsCompact] = useState(false);
@@ -23,6 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/myprofile" element={<ProfilePage/>} />
         <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route path="/messages" element={<ChatPage/>} />
       </Routes> 
     </Router>
     {/* <ChatPage/> */}
