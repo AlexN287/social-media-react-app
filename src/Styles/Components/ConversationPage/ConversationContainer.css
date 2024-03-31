@@ -1,0 +1,74 @@
+.conversation-container {
+    background-color: #000;
+    position: fixed;
+    left: 570px;
+    height: 100vh;
+    top: 0;
+    width: 133vh;
+    flex-grow: 1; /* Take up the remaining space next to the sidebar */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    border-left: 1px solid #2ecc71; /* Add a border between this view and the chats menu */
+  }
+  
+  .conversation-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #fff;
+    border-bottom: 1px solid #2ecc71;
+  }
+  
+  .messages-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Allow scrolling */
+    padding: 10px;
+  }
+  
+  .message {
+    margin: 10px 0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    max-width: 60%; /* Adjust width of message bubbles */
+  }
+  
+  .message.them {
+    background-color: #f0f0f0; /* Different background for 'them' */
+    align-self: flex-start; /* Align 'them' messages to the left */
+  }
+  
+  .message.you {
+    background-color: #007bff; /* Different background for 'you' */
+    color: white;
+    align-self: flex-end; /* Align 'you' messages to the right */
+  }
+  
+  .message-time {
+    display: block; /* New line */
+    text-align: right;
+    font-size: 0.75rem;
+    margin-top: 5px;
+  }
+  
+  .conversation-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #2ecc71;
+  }
+  
+  .conversation-input input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+  }
+  
+  .conversation-input button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #007bff;
+    color: white;
+  }
