@@ -180,7 +180,7 @@ const ChatPage = () => {
 
         <ChatsContainer onSelectConversation={handleSelectConversation} token={token} />
       </div>
-      <ConversationContainer />
+      <ConversationContainer  token={token} selectedConversationId={selectedConversationId}/>
       <Modal isOpen={showAddConversationModal} onClose={() => setShowAddConversationModal(false)}>
         <h2 className='modal-add-conv-header'>Select Friends</h2>
         <ul className='modal-add-conv-ul'>

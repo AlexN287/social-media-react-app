@@ -21,12 +21,17 @@
   }
   
   .messages-list {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     overflow-y: auto; /* Allow scrolling */
     padding: 10px;
   }
   
   .message {
+    border: none;
+    color: #fff;
+    display: flex;
     margin: 10px 0;
     padding: 5px 10px;
     border-radius: 20px;
@@ -34,15 +39,16 @@
   }
   
   .message.them {
-    background-color: #f0f0f0; /* Different background for 'them' */
-    align-self: flex-start; /* Align 'them' messages to the left */
+    background-color: #2ecc71; /* Different background for 'them' */
+    justify-content: flex-start; /* Align 'them' messages to the left */
   }
   
   .message.you {
     background-color: #007bff; /* Different background for 'you' */
-    color: white;
-    align-self: flex-end; /* Align 'you' messages to the right */
+    justify-content: flex-end; /* Align 'you' messages to the right */
+    margin-left: auto; /* Pushes the message to the right */
   }
+  
   
   .message-time {
     display: block; /* New line */

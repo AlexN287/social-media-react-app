@@ -24,18 +24,6 @@ const Menu = () => {
     setFriendshipRequestsCount(prevCount => prevCount - 1);
   };
 
-  // Handler to toggle menu size
-  const toggleMenuSize = (targetRoute) => {
-    // Check if the target route is the same as the current route
-    if (location.pathname !== targetRoute) {
-      const newState = !isMenuCollapsed;
-      setIsMenuCollapsed(newState);
-      sessionStorage.setItem('isMenuCollapsed', JSON.stringify(newState));
-    }
-  };
-
-
-
   useEffect(() => {
     const fetchFriendshipRequestsCount = async () => {
       try {
@@ -50,20 +38,28 @@ const Menu = () => {
     };
 
     fetchFriendshipRequestsCount();
-  }, []);
+
+    if (location.pathname === '/messages') {
+      setIsMenuCollapsed(true); // Or false, depending on your desired behavior
+      sessionStorage.setItem('isMenuCollapsed', 'true');
+    } else {
+      setIsMenuCollapsed(false); // This could also be a dynamic value or the opposite of your choice above
+      sessionStorage.setItem('isMenuCollapsed', 'false');
+    }
+  }, [location.pathname]);
 
   return (
     <div className={`menu-main-container ${isMenuCollapsed ? 'collapsed' : ''}`}>
       <nav className={`sidebar-menu ${isMenuCollapsed ? 'collapsed' : ''}`}>
         <h1 className="menu-title">Social Media App</h1>
         <ul className="menu-items">
-          <li onClick={() => toggleMenuSize('/home')}>
+          <li>
             <Link to="/home">
               <span className="icon" role="img" aria-label="Home">🏠</span>
               {!isMenuCollapsed && 'Home'}
             </Link>
           </li>
-          <li onClick={() => toggleMenuSize('/messages')}>
+          <li>
             <Link to="/messages">
               <span className="icon" role="img" aria-label="Messages">✉️</span>
               {!isMenuCollapsed && 'Messages'}
@@ -77,13 +73,13 @@ const Menu = () => {
               <span className="notification-count">{friendshipRequestsCount}</span>
             </button>
           </li>
-          <li onClick={() => toggleMenuSize('/add-post')}>
+          <li>
             <Link to="/add-post">
               <span className="icon" role="img" aria-label="Add a post">➕</span>
               {!isMenuCollapsed && 'Add a post'}
             </Link>
           </li>
-          <li onClick={() => toggleMenuSize('/myprofile')}>
+          <li>
             <Link to="/myprofile">
               <span className="icon" role="img" aria-label="My Profile">👤</span>
               {!isMenuCollapsed && 'My Profile'}
