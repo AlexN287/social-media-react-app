@@ -1,0 +1,50 @@
+h3{
+    color: white;
+}
+
+.members-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.members-list li {
+    display: flex;
+    justify-content: space-between; /* This spreads the username and button to each end */
+    align-items: center; /* Aligns items vertically in the center */
+    margin-bottom: 10px; /* Adds some space between list items */
+    color: white;
+}
+
+.members-list button {
+    background: none;
+    border: 1px solid red;
+    border-radius: 20px;
+    width: 80px;
+    color: white;
+    padding: 5px 10px; /* Adjust padding to fit your design */
+    cursor: pointer; /* Changes cursor to pointer on hover over the button */
+}
+
+.members-list button:hover {
+    background: red;
+}
+
+.user-data{
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.profile-image-placeholder {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+}

@@ -1,0 +1,40 @@
+.members-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .members-list li {
+    display: flex;
+    justify-content: space-between; /* Ensures space distribution between elements */
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .user-data {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjusts space between the image/username and the rest */
+    margin-right: 10px;
+  }
+  
+  .friend-profile-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .add-member2 {
+    background: none;
+    border: 1px solid #007bff;
+    color: #007bff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-member2:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  

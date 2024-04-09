@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/ConversationPage.css'; // Make sure to create a ChatPage.css file for styles
 import axios from 'axios';
 
-import Modal from '../Components/ConversationPage/AddConversation';
+import Modal from '../Components/ConversationPage/ConversationModal';
 
 import Menu from '../Components/MainPage/Menu';
 
@@ -34,11 +34,13 @@ const ChatPage = () => {
   const token = localStorage.getItem('token'); // Assuming the token is stored in localStorage
   const [showAddConversationModal, setShowAddConversationModal] = useState(false);
   const [selectedConversationId, setSelectedConversationId] = useState(null);
+  const [currentConversation, setCurrentConversation] = useState(null);
   const [friends, setFriends] = useState([])
   const [selectedFriendIds, setSelectedFriendIds] = useState([]);
   const [groupName, setGroupName] = useState('');
   const [groupImage, setGroupImage] = useState(null);
   const [creationError, setCreationError] = useState('');
+  const [conversationImage, setConversationImage] = useState(null);
 
   const toggleFriendSelection = (friendId) => {
     setSelectedFriendIds(prev => {
@@ -54,9 +56,15 @@ const ChatPage = () => {
   };
 
   // This function could be for handling the selection of a conversation
-  const handleSelectConversation = (conversationId) => {
-    setSelectedConversationId(conversationId);
-  };
+// In ChatPage or wherever you handle the selection of a conversation
+const handleSelectConversation = (conversation, conversationImage) => {
+  setSelectedConversationId(conversation.id);
+  setCurrentConversation(conversation);
+  setConversationImage(conversationImage); // Assuming you have a state for current conversation details
+  console.log(conversation)
+  // ...any other logic you need to perform when a conversation is selected
+};
+
 
   const handleAddConversationClick = () => {
     setShowAddConversationModal(true);
@@ -163,8 +171,6 @@ const ChatPage = () => {
     }
   };
 
-
-
   return (
     <div className='chat-page'>
       <Menu />
@@ -180,7 +186,7 @@ const ChatPage = () => {
 
         <ChatsContainer onSelectConversation={handleSelectConversation} token={token} />
       </div>
-      <ConversationContainer  token={token} selectedConversationId={selectedConversationId}/>
+      <ConversationContainer  token={token} selectedConversationId={selectedConversationId} currentConversation={currentConversation} conversationImage={conversationImage}/>
       <Modal isOpen={showAddConversationModal} onClose={() => setShowAddConversationModal(false)}>
         <h2 className='modal-add-conv-header'>Select Friends</h2>
         <ul className='modal-add-conv-ul'>

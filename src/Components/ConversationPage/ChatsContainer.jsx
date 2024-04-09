@@ -1,12 +1,35 @@
 // Components/ChatPage/ChatsContainer.jsx
 import React, { useState, useEffect } from 'react';
 import ConversationItem from './ConversationItem';
+import eventBus from '../../Helper/EventBus';
 import '../../Styles/Components/ConversationPage/ChatsContainer.css';
 
 const ChatsContainer = ({ onSelectConversation }) => {
   const [conversations, setConversations] = useState([]);
   const [conversationImages, setConversationImages] = useState({});
   const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    // Function to handle the event
+    const handleLastMessageUpdate = (updateInfo) => {
+      setConversations(currentConversations => {
+        return currentConversations.map(convo => {
+          if (convo.id === updateInfo.conversationId) {
+            return { ...convo, lastMessage: updateInfo.lastMessage, lastUpdated: updateInfo.lastUpdated };
+          }
+          return convo;
+        });
+      });
+    };
+  
+    // Subscribe to the updateLastMessage event
+    eventBus.on('updateLastMessage', handleLastMessageUpdate);
+  
+    // Cleanup function to unsubscribe from the event on component unmount
+    return () => {
+      eventBus.off('updateLastMessage', handleLastMessageUpdate);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchConversationsList = async (token) => {
@@ -62,14 +85,31 @@ const ChatsContainer = ({ onSelectConversation }) => {
     });
   }, [token]);
 
+  useEffect(() => {
+    // Fetch initial conversations list and set up event listeners here...
+
+    // Listen for 'leftConversation' event
+    const handleLeftConversation = (conversationId) => {
+      setConversations(conversations => conversations.filter(conversation => conversation.id !== conversationId));
+      // Optionally, reset selectedConversationId or perform other UI updates
+    };
+
+    eventBus.on('leftConversation', handleLeftConversation);
+
+    // Cleanup function to unsubscribe from the event on component unmount
+    return () => {
+      eventBus.off('leftConversation', handleLeftConversation);
+    };
+  }, []);
+
   return (
     <div className="chat-list">
       {conversations.map(conversation => (
         <ConversationItem
           key={conversation.id}
           conversation={conversation}
-          onClick={() => onSelectConversation(conversation.id)}
-          // imageUrl={conversationImages[conversation.id]}
+          onClick={() => onSelectConversation(conversation, conversationImages[conversation.id])}
+          //imageUrl={conversationImages[conversation.id]}
         />
       ))}
     </div>
