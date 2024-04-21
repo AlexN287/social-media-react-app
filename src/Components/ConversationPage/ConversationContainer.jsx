@@ -110,38 +110,36 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
     const socket = new SockJS('http://localhost:8080/ws');
     const client = Stomp.over(socket);
 
-    client.connect({}, () => {
-      console.log('WebSocket Connected');
+    client.connect({'Authorization': `Bearer ${token}`}, frame => {
+      console.log('WebSocket Connected: ' + frame);
+  
+      //client.send("/app/verifyToken", {}, JSON.stringify({ token: `Bearer ${token + 'wsdeaedsefd'}` }));
 
+  
       if (selectedConversationId) {
-        // Fetch existing messages for the selected conversation
-        //fetchMessages(selectedConversationId);
-
         const subscriptionPath = `/topic/conversations/${selectedConversationId}`;
         client.subscribe(subscriptionPath, (msg) => {
           const receivedMessage = JSON.parse(msg.body);
           setMessages(prevMessages => [...prevMessages, receivedMessage]);
-
           eventBus.emit('updateLastMessage', {
             conversationId: receivedMessage.conversationId,
-            lastMessage: receivedMessage.content, // Assuming the received message structure has these fields
-            lastUpdated: new Date().toISOString() // or receivedMessage.timestamp if it's sent from the server
+            lastMessage: receivedMessage.content,
+            lastUpdated: new Date().toISOString()
           });
         });
       }
-    }, (error) => {
+    }, error => {
       console.error('WebSocket Error', error);
     });
-
+  
     stompClientRef.current = client;
-
+  
     return () => {
-      if (stompClientRef.current && stompClientRef.current.connected) {
-        stompClientRef.current.disconnect(() => console.log("WebSocket Disconnected"));
-        stompClientRef.current = null;
+      if (client && client.connected) {
+        client.disconnect(() => console.log("WebSocket Disconnected"));
       }
     };
-  }, [token, selectedConversationId]); // Reconnect if token or selected conversation changes
+  }, [token, selectedConversationId]);
 
   const sendMessage = (e) => {
     e.preventDefault();
