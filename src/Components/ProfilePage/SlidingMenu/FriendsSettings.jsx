@@ -79,11 +79,11 @@ const FriendsSettings = ({onSave, onClose}) => {
             fetchFriendsList(user.id, token).then(friends => {
                 setFriends(friends);
                 // Fetch all profile images after setting friends
-                // friends.forEach(friend => {
-                //     fetchUserProfileImage(friend.id, token).then(imageSrc => {
-                //         setFriendImages(prevImages => ({ ...prevImages, [friend.id]: imageSrc }));
-                //     });
-                // });
+                friends.forEach(friend => {
+                    fetchUserProfileImage(friend.id, token).then(imageSrc => {
+                        setFriendImages(prevImages => ({ ...prevImages, [friend.id]: imageSrc }));
+                    });
+                });
             });
         });
         
@@ -151,11 +151,11 @@ const FriendsSettings = ({onSave, onClose}) => {
                 <ul>
                     {friends.map(friend => (
                         <li key={friend.id} className='friend-form'>
-                            {/* {friendImages[friend.id] ? (
+                            {friendImages[friend.id] ? (
                                 <img className='friend-profile-image' onClick={() => handleUserClick(friend.id)} src={friendImages[friend.id]} alt={`${friend.username}'s profile`} style={{width: 50, height: 50}} />
                             ) : (
                                 <div>Loading...</div>
-                            )} */}
+                            )}
                             <span className='friend-username' onClick={() => handleUserClick(friend.id)}>{friend.username}</span>
     
                             <div className='buttons'>

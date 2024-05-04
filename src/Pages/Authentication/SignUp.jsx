@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import '../../Styles/Pages/Authentication/SignUpStyles.css';
 import { useNavigate } from 'react-router-dom';
-
-import axios from 'axios';
+import AuthService from '../../Services/Auth/AuthService';
+import InputField from '../../Components/Auth/InputField';
+import FileInputField from '../../Components/Auth/FileInputField';
+import FormCard from '../../Components/Auth/FormCard';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -22,20 +24,10 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/signup', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-
-      if (response.status === 200) {
-        console.log('Registration successful');
-        localStorage.setItem('token', response.data.token);
-        navigate('/'); // Redirect to home or sign-in page
-      } else {
-        console.log('Error during registration:', response.statusText);
-        setError(response.statusText);
-      }
+      const data = await AuthService.signUp(formData); // Use authService to handle the sign up
+      localStorage.setItem('token', data.token); // Store the token if sign-up is successful
+      console.log('Registration successful');
+      navigate('/'); // Redirect to home or sign-in page
     } catch (error) {
       console.error('Error during registration:', error);
       setError(error.response ? error.response.data : 'An error occurred during registration');
@@ -43,49 +35,19 @@ const SignUp = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
-            <form onSubmit={handleSubmit} className="box" encType="multipart/form-data">
-              <h1>Sign Up</h1>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="file"
-                name="profileImage"
-                accept="image/*"
-                onChange={(e) => setProfileImage(e.target.files[0])}
-              />
-              <input type="submit" value="Sign Up" />
-              <p className="text-muted">
-                Already have an account? Please <a href="/">Sign In</a>
-              </p>
-              {error && <p className="error-message">{error}</p>}
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <FormCard title="Sign Up">
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <InputField type="text" name="username" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
+        <InputField type="password" name="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+        <InputField type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+        <FileInputField name="profileImage" accept="image/*" onChange={e => setProfileImage(e.target.files[0])} />
+        <input type="submit" value="Sign Up" className="btn btn-primary" />
+        <p className="text-muted">
+          Already have an account? Please <a href="/">Sign In</a>
+        </p>
+        {error && <p className="error-message">{error}</p>}
+      </form>
+    </FormCard>
   );
 };
 

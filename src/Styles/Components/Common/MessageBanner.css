@@ -1,0 +1,31 @@
+.message-banner {
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    font-size: 16px;
+    color: black; /* Default text color */
+    text-align: center;
+    position: relative;
+}
+
+.message-banner.error {
+    background-color: red;
+    color: white; /* White text for better contrast on red */
+}
+
+.message-banner.success {
+    background-color: white;
+    color: black; /* Black text for visibility on white */
+    border: 1px solid #ccc; /* Optional border for white background */
+}
+
+.close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    border: none;
+    background: none;
+    color: inherit; /* Inherits from parent container */
+    font-size: 20px;
+    cursor: pointer;
+}

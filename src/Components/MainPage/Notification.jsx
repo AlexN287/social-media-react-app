@@ -5,27 +5,27 @@ import { useNavigate } from 'react-router-dom';
 import '../../Styles/Components/MainPage/Notification.css';
 
 
-// async function fetchUserProfileImage(userId, token) {
-//     try {
-//         const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
-//             method: 'GET',
-//             headers: {
-//                 'Authorization': `Bearer ${token}`
-//             }
-//         });
+async function fetchUserProfileImage(userId, token) {
+    try {
+        const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//         }
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-//         return URL.createObjectURL(await response.blob());
-//     } catch (error) {
-//         console.error('Error fetching profile image:', error);
-//     }
-// }
+        return URL.createObjectURL(await response.blob());
+    } catch (error) {
+        console.error('Error fetching profile image:', error);
+    }
+}
 
 const Notification = ({ onUpdate }) => {
-    // const [profileImages, setProfileImages] = useState({});
+    const [profileImages, setProfileImages] = useState({});
     const [friendRequests, setFriendRequests] = useState([]);
     const jwtToken = localStorage.getItem('token');
     const navigate = useNavigate();

@@ -1,0 +1,23 @@
+.post-item {
+    border-bottom: 2px solid #2ecc71;
+    color: white;
+    width: calc(100% - 40px); /* Adjusts the width to be slightly less than the container */
+    padding: 10px 20px; /* Adds padding inside each post item, adjusting space around content */
+    box-sizing: border-box; /* Ensures padding and border are included in the width */
+    margin-bottom: 20px; /* Adds space between post items */
+}
+
+.comment-button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.post-buttons-container {
+    display: flex;
+    justify-content: center;
+}

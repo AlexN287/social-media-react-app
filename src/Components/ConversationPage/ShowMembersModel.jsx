@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './ConversationModal';
+import Modal from '../Common/Modal';
 import '../../Styles/Components/ConversationPage/ShowMemberModel.css';
 import axios from 'axios';
 import eventBus from '../../Helper/EventBus';
@@ -120,10 +120,10 @@ const fetchConversationMembers = async (conversationId, token) => {
             setMembers(membersData);
     
             // Fetch and set profile images for each member
-            membersData.forEach(async (member) => {
-              const imageUrl = await fetchUserProfileImage(member.id);
-              setMemberImages(prevImages => ({ ...prevImages, [member.id]: imageUrl }));
-            });
+            // membersData.forEach(async (member) => {
+            //   const imageUrl = await fetchUserProfileImage(member.id);
+            //   setMemberImages(prevImages => ({ ...prevImages, [member.id]: imageUrl }));
+            // });
           }
         };
     
@@ -142,11 +142,11 @@ const fetchConversationMembers = async (conversationId, token) => {
               {members.map(member => (
                 <li key={member.id}>
                   <div className='user-data'>
-                    {memberImages[member.id] ? (
+                    {/* {memberImages[member.id] ? (
                       <img src={memberImages[member.id]} alt={member.username} className='user-profile-image'/>
                     ) : (
                       <div className='profile-image-placeholder' />
-                    )}
+                    )} */}
                     {member.username}
                   </div>
                   <button onClick={() => {

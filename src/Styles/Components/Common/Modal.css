@@ -12,15 +12,28 @@
 }
 
 .modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #1e1e1e;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Set max dimensions to ensure it doesn't fill the entire screen and remains centered */
-  max-width: 600px; /* Adjust as needed */
-  max-height: 80vh; /* Adjust as needed */
+  max-width: 80%; /* Adjust as needed */
+  max-height: 90%; /* Adjust as needed */
   overflow-y: auto; /* Allows scrolling within the modal if content exceeds max-height */
 }
+
+.modal-content h2{
+  color: aliceblue;
+}
+
+.modal-content > *:not(:last-child) {
+  margin-bottom: 20px; 
+}
+
 
 @media (max-width: 600px) {
   .modal-content {
@@ -29,29 +42,9 @@
   }
 }
 
-.modal-close{
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer;
-    transform: scale(1);
-    opacity: 1;
-    border: 2px solid #e10416;
-}
-
-.modal-close:hover {
-  background-color: #e10416;
-}
-
 .creation-error-message {
   color: red; /* Error messages are conventionally red */
   text-align: center; /* Center the message */
   margin: 10px 0; /* Add some spacing around the message */
 }
+

@@ -6,90 +6,16 @@ import FriendsSettings from './SlidingMenu/FriendsSettings';
 import BlockedUsers from './SlidingMenu/BlockedUsers';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
-async function getLoggedUser(token) {
-    try {
-        const response = await fetch('http://localhost:8080/user/profile', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const user = await response.json();
-        return user;
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-}
-
-async function fetchUserProfileImage(userId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return URL.createObjectURL(await response.blob());
-    } catch (error) {
-        console.error('Error fetching profile image:', error);
-    }
-}
-
-async function fetchNrOfPosts(userId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/post/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const nrOfPosts = await response.json();
-        return nrOfPosts;
-    } catch (error) {
-        console.error('Error fetching number of posts:', error);
-    }
-}
-
-async function fetchNrOfFriends(userId, token) {
-    try {
-        console.log('Nr of friends');
-        const response = await fetch(`http://localhost:8080/friendsList/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const nrOfFriends = await response.json();
-        return nrOfFriends;
-    } catch (error) {
-        console.error('Error fetching number of friends:', error);
-    }
-}
+import {fetchNrOfFriends} from '../../Services/Friends/FriendsService';
+import { getLoggedUser } from '../../Services/User/UserService';
+import { fetchUserProfileImage } from '../../Services/User/UserService';
+import { fetchNrOfPosts } from '../../Services/Posts/PostService';
+import LoadingComponent from '../Common/LoadingComponent';
+import UserProfileImage from '../Common/ProfileImage';
 
 function ProfileHeader() {
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
     const [nrOfPosts, setNrOfPosts] = useState(0);
     const [nrOfFriends, setNrOfFriends] = useState(0);
@@ -98,16 +24,18 @@ function ProfileHeader() {
     const [activeAction, setActiveAction] = useState(''); // What action to show in the new window
     const navigate = useNavigate();
     const toggleSlidingWindow = () => setShowSlidingWindow(!showSlidingWindow);
+    const jwtToken = localStorage.getItem('token');
 
     useEffect(() => {
-        const jwtToken = localStorage.getItem('token');
+        
         if (jwtToken) {
             getLoggedUser(jwtToken).then(userData => {
                 if (userData && userData.username) {
                     setUsername(userData.username);
-                    fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
-                        setProfileImage(imageUrl);
-                    });
+                    setUserId(userData.id);
+                    // fetchUserProfileImage(userData.id, jwtToken).then(imageUrl => {
+                    //     setProfileImage(imageUrl);
+                    // });
                     fetchNrOfPosts(userData.id, jwtToken).then(postsCount => {
                         setNrOfPosts(postsCount);
                     });
@@ -122,7 +50,7 @@ function ProfileHeader() {
     }, []);
 
     if (!username) {
-        return <div>Loading...</div>;
+        return <LoadingComponent/>;
     }
 
     const handleLogout = async () => {
@@ -147,7 +75,7 @@ function ProfileHeader() {
 
     // Function to close the action sliding window
     const closeActionWindow = () => {
-        setShowActionWindow(false);
+        setShowActionWindow(false); 
         setShowSlidingWindow(false);
         setActiveAction('');
     };
@@ -185,7 +113,8 @@ function ProfileHeader() {
 
         <div className='main-container'>
             <div id="profile" className='profile-header'>
-                {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>}
+                {/* {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>} */}
+                {/* <UserProfileImage userId={userId} token={jwtToken} size={'large'}/> */}
                 <div className="user-info">
                     <div className='username-and-actions'>
                         <h1 className='username'>{username}</h1>

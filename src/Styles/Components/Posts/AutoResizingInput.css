@@ -1,0 +1,9 @@
+.auto-resizing-textarea {
+    width: 100%;
+    min-height: 50px;
+    max-height: 200px; /* Adjust max-height as necessary */
+    overflow: auto;
+    resize: none;
+    padding: 10px;
+    box-sizing: border-box;
+}

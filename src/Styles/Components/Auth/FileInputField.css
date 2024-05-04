@@ -1,0 +1,17 @@
+.file-input-field{
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    padding: 5px;
+    background:none;
+    cursor: pointer;
+    color: white;
+}
+
+.file-input-field:hover {
+    background: #2ecc71;
+}
+
+.file-input-field:focus {
+    outline: none;
+    border-color: #367c39;
+}

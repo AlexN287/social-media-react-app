@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Modal from './ConversationModal';
+import Modal from '../Common/Modal';
 import '../../Styles/Components/ConversationPage/AddMembersModal.css';
 
 const AddMembersModal = ({ isOpen, onClose, conversationId, token}) => {
@@ -22,13 +22,13 @@ const AddMembersModal = ({ isOpen, onClose, conversationId, token}) => {
           setFriendImages({});
   
           // Fetch profile images for each friend
-          const imagePromises = data.map(friend =>
-            fetchUserProfileImage(friend.id, token).then(imageUrl => {
-              setFriendImages(prev => ({ ...prev, [friend.id]: imageUrl }));
-            })
-          );
+          // const imagePromises = data.map(friend =>
+          //   fetchUserProfileImage(friend.id, token).then(imageUrl => {
+          //     setFriendImages(prev => ({ ...prev, [friend.id]: imageUrl }));
+          //   })
+          // );
   
-          await Promise.all(imagePromises);
+          // await Promise.all(imagePromises);
           setIsLoading(false);
         })
         .catch(err => {
@@ -92,12 +92,12 @@ const AddMembersModal = ({ isOpen, onClose, conversationId, token}) => {
               {friends.map(friend => (
                 <li key={friend.id}>
                   <div className='user-data'>
-                  {friendImages[friend.id] ? (
+                  {/* {friendImages[friend.id] ? (
                     <img src={friendImages[friend.id]} alt={friend.username} className='friend-profile-image' />
                   ) : (
                     <div className='profile-image-placeholder'></div>
                   )}
-                  {friend.username}
+                  {friend.username} */}
                   
                   </div>
                   <button className='add-member2' onClick={() => handleAddMember(friend.id)}>Add</button>

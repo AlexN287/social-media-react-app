@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/ConversationPage.css'; // Make sure to create a ChatPage.css file for styles
 import axios from 'axios';
 
-import Modal from '../Components/ConversationPage/ConversationModal';
+import Modal from '../Components/Common/Modal';
 
 import Menu from '../Components/MainPage/Menu';
 

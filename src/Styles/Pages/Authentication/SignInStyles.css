@@ -9,55 +9,13 @@ body {
     min-height: 100vh;
 }
 
-.card {
-    margin-bottom: 20px;
-    border: none;
-    background: none;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
 
-.box {
-    width: 350px;
-    padding: 40px;
-    background: #191919;
-    text-align: center;
-    transition: 0.25s;
-}
-
-.box h1 {
-    color: white;
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-.box p.text-muted {
+.text-muted {
     color: #ccc;
 }
 
-.box input[type="text"],
-.box input[type="password"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #3498db;
-    padding: 10px 20px; 
-    width: 60%;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-}
 
-.box input[type="text"]:focus,
-.box input[type="password"]:focus {
-    width: 80%; 
-    padding: 10px 10px;
-    border-color: #2ecc71;
-}
-
-.box input[type="submit"] {
+input[type="submit"] {
     border: 0;
     background: none;
     display: block;
@@ -74,22 +32,22 @@ body {
     opacity: 1;
 }
 
-.box input[type="submit"]:hover {
+input[type="submit"]:hover {
     background: #2ecc71;
     transform: scale(1.05);
     opacity: 0.8;
 }
 
-.box p.text-muted {
+.text-muted {
     font-size: medium;
 }
 
-.box p.text-muted a {
+.text-muted a {
     text-decoration: none;
     color: #2ecc71;
 }
 
-.box p.text-muted a:hover {
+.text-muted a:hover {
     text-decoration: underline;
 }
 

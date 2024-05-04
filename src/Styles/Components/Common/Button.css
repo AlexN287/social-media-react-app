@@ -1,0 +1,36 @@
+.button {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    opacity: 0.8;
+}
+
+.button-green{
+    border: 2px solid #2ecc71;
+}
+
+.button-red {
+    border: 2px solid #e10416;
+}
+
+.button-green:hover{
+    background: #2ecc71;
+}
+
+.button-red:hover {
+    background: #e10416;
+}

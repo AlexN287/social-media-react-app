@@ -1,0 +1,49 @@
+.comments-layout {
+    display: flex;
+    width: 100%;
+    min-width: 1000px;
+    min-height: 400px;
+}
+
+.post-details {
+    overflow-y: auto;
+    flex: 1;  /* Equal flex basis */
+    padding: 10px;
+    border-right: 2px solid #2ecc71;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.comments-section {
+    overflow-y: auto;
+    flex: 1;  /* Equal flex basis */
+    padding-left: 10px;
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+}
+
+.input-container {
+    display: flex;
+
+}
+
+.input-container input {
+    min-width: 250px;
+    margin-right: 10px;
+}
+
+.input-container button {
+    height: 45px;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+

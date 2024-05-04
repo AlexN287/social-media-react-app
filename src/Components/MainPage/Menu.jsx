@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 
 import '../../Styles/Components/MainPage/Menu.css';
 import Notification from './Notification';
+import AddPostModal from '../Posts/AddPostModal';
 import axios from 'axios';
 
 const Menu = () => {
@@ -14,6 +15,8 @@ const Menu = () => {
     const saved = sessionStorage.getItem('isMenuCollapsed');
     return saved ? JSON.parse(saved) : false; // Convert string back to boolean
   });
+
+  const [isAddPostModalOpen, setAddPostModalOpen] = useState(false);
 
   // Toggle the visibility of the notifications menu
   const toggleNotifications = () => {
@@ -74,10 +77,10 @@ const Menu = () => {
             </button>
           </li>
           <li>
-            <Link to="/add-post">
+            <button onClick={() => setAddPostModalOpen(true)}>  {/* Change to a button to manage modal */}
               <span className="icon" role="img" aria-label="Add a post">➕</span>
               {!isMenuCollapsed && 'Add a post'}
-            </Link>
+            </button>
           </li>
           <li>
             <Link to="/myprofile">
@@ -87,6 +90,9 @@ const Menu = () => {
           </li>
         </ul>
       </nav>
+
+       {/* Render the AddPostModal here */}
+       <AddPostModal isOpen={isAddPostModalOpen} onClose={() => setAddPostModalOpen(false)} />
 
       {showNotifications && (
         <div className="notifications-menu">

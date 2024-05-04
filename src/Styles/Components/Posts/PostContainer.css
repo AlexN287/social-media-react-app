@@ -1,0 +1,18 @@
+.post-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width:thin; /* "auto" or "thin" */
+    scrollbar-color:#3498db #2ecc71;
+    overflow-x: hidden;
+}
+
+.post-container-header {
+    color: aliceblue;
+    width: 100%; /* Ensures the header takes full width of its container */
+    padding: 20px;
+    border-bottom: 2px solid #2ecc71;
+}
