@@ -29,6 +29,10 @@
     position: relative;
 }
 
+.likes-count {
+    cursor: pointer;
+}
+
 .explosion {
     position: absolute;
     top: 50%;

@@ -8,9 +8,16 @@ import CommentsModal from './Comments/CommentsModal';
 import { fetchPostMedia } from '../../Services/Posts/PostService';
 import LoadingComponent from '../Common/LoadingComponent';
 import LikeButton from './Likes/LikeButton';
+import LikesModal from './Likes/LikesModal';
+import { checkUserLikedPost } from '../../Services/Posts/LikeService';
+import UserProfileImage from '../Common/ProfileImage';
+import { formatDateOrTime } from '../../Helper/Util';
+import OptionsButton from '../Common/OptionButton';
+
 
 const PostItem = ({ post }) => {
-    const { content } = post;
+    const { content, user, createdAt } = post;
+    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [likesCount, setLikesCount] = useState(0);
     const [commentsCount, setCommentsCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
@@ -20,8 +27,15 @@ const PostItem = ({ post }) => {
     const token = localStorage.getItem('token');
     const [mediaUrl, setMediaUrl] = useState(null);
     const [mediaLoading, setMediaLoading] = useState(false);
+    const [showLikesModal, setShowLikesModal] = useState(false);
 
+    const openLikesModal = () => {
+        setShowLikesModal(true);
+    };
 
+    const closeLikesModal = () => {
+        setShowLikesModal(false);
+    };
 
     useEffect(() => {
         async function fetchMediaAndCounts() {
@@ -42,8 +56,10 @@ const PostItem = ({ post }) => {
             try {
                 const likes = await getLikesCount(post.id, token);
                 const comments = await getCommentsCount(post.id, token);
+                const isLikedByUser = await checkUserLikedPost(post.id, token);
                 setLikesCount(likes);
                 setCommentsCount(comments);
+                setIsLiked(isLikedByUser);
             } catch (error) {
                 console.error('Error fetching counts:', error);
             }
@@ -79,20 +95,35 @@ const PostItem = ({ post }) => {
 
     return (
         <div className="post-item">
+
+            <div className="post-header">
+            <div className="post-user-details">
+            <UserProfileImage userId={user.id} token={token} size={'small'}/>
+                <strong>{user.username}</strong>
+                </div>
+
+                <div className='post-header-right-side'>
+                <small>{formatDateOrTime(createdAt)}</small>
+                <OptionsButton className='das'/>
+                </div>
+                
+            </div>
+
             <p>{content.textContent}</p>
-            {mediaLoading ? (
-                <LoadingComponent />
-            ) : mediaUrl ? (
+            {mediaUrl ? (
                 <img src={mediaUrl} alt="Post" style={{ maxWidth: '100%' }} />
             ) : null
             }
 
+            
+
             <div className='post-buttons-container'>
                 <LikeButton
                     isLiked={isLiked}
-                    onClick={toggleLike}
+                    onLikesButtonClick={toggleLike}
+                    onLikesCountClick={openLikesModal}
                     showExplosion={showExplosion}
-                    likesCount = {likesCount}
+                    likesCount={likesCount}
                 />
 
                 <button onClick={toggleModal} className="comment-button" aria-label="View comments">
@@ -105,6 +136,11 @@ const PostItem = ({ post }) => {
                 onClose={toggleModal}
                 post={post}
                 mediaUrl={mediaUrl}
+            />
+            <LikesModal
+                isOpen={showLikesModal}
+                onClose={closeLikesModal}
+                postId={post.id} // Assuming postId is available
             />
         </div>
     );

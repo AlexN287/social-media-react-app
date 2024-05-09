@@ -1,0 +1,20 @@
+.likes-modal-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    list-style: none;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    min-height: 50px; /* Example minimum height */
+    border-bottom: 2px solid #2ecc71;
+  }
+  
+  .likes-modal-username {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Ensures long names are truncated with ellipsis */
+    max-width: 70%; /* Adjust based on your design needs */
+  }
+  

@@ -12,6 +12,7 @@ import { fetchUserProfileImage } from '../../Services/User/UserService';
 import { fetchNrOfPosts } from '../../Services/Posts/PostService';
 import LoadingComponent from '../Common/LoadingComponent';
 import UserProfileImage from '../Common/ProfileImage';
+import Button from '../Common/Button';
 
 function ProfileHeader() {
     const [username, setUsername] = useState('');
@@ -111,17 +112,15 @@ function ProfileHeader() {
 
     return (
 
-        <div className='main-container'>
+        <div className='profile-header-main-container'>
             <div id="profile" className='profile-header'>
                 {/* {profileImage && <img src={profileImage} alt="Profile" className="profile-image"/>} */}
-                {/* <UserProfileImage userId={userId} token={jwtToken} size={'large'}/> */}
+                <UserProfileImage userId={userId} token={jwtToken} size={'large'}/>
                 <div className="user-info">
                     <div className='username-and-actions'>
                         <h1 className='username'>{username}</h1>
-                        <input type="submit" className='edit-button' value="Edit Profile" onClick={toggleSlidingWindow} />
-
-                        <input onClick={handleLogout} type="submit" className='logout-button' value="Logout" />
-                        {/* Include any other buttons you have here */}
+                        <Button color="green" onClick={toggleSlidingWindow}>Edit profile</Button>
+                        <Button color="green" onClick={handleLogout}>Logout</Button>
                     </div>
                     <div className='user-stats'>
                         <span className='posts-count'>Posts: {nrOfPosts}</span>

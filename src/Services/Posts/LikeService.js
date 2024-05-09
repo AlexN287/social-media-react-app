@@ -38,3 +38,31 @@ export const deleteLike = async (postId, token) => {
         throw error;
     }
 };
+
+export const checkUserLikedPost = async (postId, token) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/like/${postId}/check`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        return response.data; // Directly access data returned from Axios, assumed to be true or false
+    } catch (error) {
+        console.error('Failed to check like status:', error);
+
+        // Optionally handle different types of errors if needed
+        if (error.response) {
+            // The server responded with a status outside the 2xx range
+            console.error(`HTTP error! status: ${error.response.status}`);
+        } else if (error.request) {
+            // The request was made but no response was received
+            console.error('No response received');
+        } else {
+            // Something happened in setting up the request
+            console.error('Error', error.message);
+        }
+
+        return false;  // Assume not liked if there's an error, or handle differently if required
+    }
+};

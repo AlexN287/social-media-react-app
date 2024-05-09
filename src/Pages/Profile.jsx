@@ -7,11 +7,16 @@ import PostContainer from '../Components/Posts/PostContainer';
 function ProfilePage() {
     return (
         <div id="profile-page" className='profile-page'>
-            <ProfileHeader/>
-            {/* <div className='profile-page-posts'>
-                <PostContainer/>
-            </div> */}
-            <Menu/>
+            <Menu />
+            <div className='profile-page-content'>
+                <div className='profile-header-component'>
+                    <ProfileHeader />
+                </div>
+
+                <PostContainer />
+
+            </div>
+
         </div>
     );
 }

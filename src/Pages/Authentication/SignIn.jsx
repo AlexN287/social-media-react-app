@@ -23,7 +23,8 @@ const SignIn = () => {
   };
 
   return (
-    <FormCard title="Sign In">
+    <div className='auth-container'>
+       <FormCard title="Sign In">
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <InputField
           type="text"
@@ -46,6 +47,8 @@ const SignIn = () => {
         {error && <p className="error-message">{error}</p>}
       </form>
     </FormCard>
+    </div>
+   
   );
 };
 

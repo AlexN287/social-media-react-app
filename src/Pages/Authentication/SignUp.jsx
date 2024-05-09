@@ -35,7 +35,8 @@ const SignUp = () => {
   };
 
   return (
-    <FormCard title="Sign Up">
+    <div className='auth-container'>
+      <FormCard title="Sign Up">
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <InputField type="text" name="username" placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
         <InputField type="password" name="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
@@ -48,6 +49,8 @@ const SignUp = () => {
         {error && <p className="error-message">{error}</p>}
       </form>
     </FormCard>
+    </div>
+    
   );
 };
 

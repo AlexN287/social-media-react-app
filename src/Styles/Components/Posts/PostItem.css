@@ -1,11 +1,14 @@
 .post-item {
-    border-bottom: 2px solid #2ecc71;
+    border: 2px solid #2ecc71;
+    border-radius: 10px;
     color: white;
-    width: calc(100% - 40px); /* Adjusts the width to be slightly less than the container */
-    padding: 10px 20px; /* Adds padding inside each post item, adjusting space around content */
+    width: 100%; /* Makes each post item take the full width of its container */
+    max-width: 600px; /* Optionally, you can set a max-width for larger screens */
+    padding: 10px 20px; /* Adds padding inside each post item */
     box-sizing: border-box; /* Ensures padding and border are included in the width */
     margin-bottom: 20px; /* Adds space between post items */
 }
+
 
 .comment-button{
     background-color: transparent;
@@ -21,3 +24,36 @@
     display: flex;
     justify-content: center;
 }
+
+
+.post-header {
+    border-bottom: 2px solid #2ecc71;
+    display: flex;
+    width: 100%; /* Adjust based on your layout needs */
+    align-items: center;
+    justify-content: space-between; /* This will place maximum space between items */
+    margin-bottom: 10px; /* Space between header and post content */
+}
+
+.post-user-details {
+    display: flex;
+    align-items: center; /* Aligns the profile image and username vertically */
+    margin-right: 20px; /* Optional: add more space between this group and the timestamp */
+}
+
+.post-user-details strong{
+    margin-left: 10px;
+}
+
+.post-item p{
+    text-align: left;
+}
+
+.post-header-right-side{
+    display: flex;
+    align-items: first baseline;
+    
+}
+
+
+

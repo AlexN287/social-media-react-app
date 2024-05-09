@@ -69,3 +69,42 @@ export async function fetchNrOfPosts(userId, token) {
         throw error; // Re-throw the error if you want to handle it in the component
     }
 }
+
+export const fetchLikes = async (postId, token) => {
+    try {
+        const response = await axios.get(`${API_URL}/${postId}/likes/users`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data; // assuming the server response is the list of users
+    } catch (error) {
+        console.error('Error fetching users who liked the post:', error);
+        throw error;
+    }
+};
+
+export async function fetchFriendsPosts(token) {
+    try {
+        const response = await axios.get(`${API_URL}/users/friends/posts`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data; // Directly return the data as Axios handles JSON parsing automatically
+    } catch (error) {
+        console.error('Failed to fetch friends\' posts:', error);
+        // Handle specific error responses if necessary
+        if (error.response) {
+            // Server responded with a status other than 2xx
+            throw new Error(`HTTP error, status = ${error.response.status}`);
+        } else if (error.request) {
+            // No response was received to the request
+            throw new Error('No response received');
+        } else {
+            // An error occurred in setting up the request
+            throw new Error(error.message);
+        }
+    }
+}
+

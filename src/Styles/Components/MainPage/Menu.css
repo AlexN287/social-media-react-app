@@ -1,7 +1,7 @@
 .sidebar-menu {
-  position: fixed; /* Fix the sidebar to the viewport */
-  top: 0; /* Align to the top of the viewport */
-  left: 0; /* Align to the left of the viewport */
+  /* position: fixed; 
+  top: 0; 
+  left: 0;  */
   width: 250px; /* Adjust width as needed */
   height: 100vh; /* Make the sidebar full height */
   background-color: #000; /* Your desired background color */

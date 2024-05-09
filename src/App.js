@@ -19,8 +19,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <LoadingProvider>
-        <AuthProvider>  {/* AuthProvider wraps all routes to provide context */}
+        
+        
           <Routes>
             <Route path="/" element={<SignIn />} />
             <Route path="/home" element={<MainPage />} />
@@ -29,8 +29,6 @@ function App() {
             <Route path="/profile/:userId" element={<UserProfile />} />
             <Route path="/messages" element={<ChatPage />} />
           </Routes>
-        </AuthProvider>
-        </LoadingProvider>
       </Router>
     </div>
   );

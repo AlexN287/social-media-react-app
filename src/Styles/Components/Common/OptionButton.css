@@ -1,0 +1,15 @@
+.options-button {
+    background-color: transparent; /* Transparent background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 24px; /* Larger font size for visibility */
+    color: white; /* Grey color for the dots */
+    padding: 5px 10px; /* Padding around the button */
+    display: flex; /* Use flex to center the content */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+}
+
+.options-button:hover {
+    color: #333; /* Darken the color on hover for feedback */
+}

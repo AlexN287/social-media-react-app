@@ -1,0 +1,19 @@
+.main-page-container {
+    display: flex;        /* Establishes a flex container */
+    background-color: black;
+      /* Sets the height to fill the viewport */
+  }
+  
+  .content-container {
+    width: 50%;
+         /* Assigns the remaining 80% width to the content area */
+    display: flex;        /* Makes it a flex container */
+    flex-direction: column; /* Stacks the children vertically */
+  }
+  
+  /* Optional: Add some styling to the SearchBar and PostContainer to see the layout more clearly */
+  .search-bar, .post-container {
+    padding: 10px;
+    margin: 10px;
+  }
+  
