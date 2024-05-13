@@ -1,0 +1,45 @@
+.connected-users-container {
+    color: aliceblue;
+    font-family: Arial, sans-serif;
+    display: flex;              /* Enable flexbox for vertical alignment */
+    flex-direction: column;     /* Stack children vertically */
+    align-items: center;        /* Align children (like ul) in the center horizontally */
+    width: 100%;                /* Ensure container takes full width if not already set */
+}
+
+.connected-users-ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;                /* Full width to allow flex behaviors to apply correctly */
+    display: flex;              /* Enable flexbox for the list */
+    flex-direction: column;     /* Stack list items vertically */
+    align-items: center;        /* Center list items horizontally */
+}
+
+.active-user-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 80%;                 /* Adjust width based on preference */
+    justify-content: center;    /* This will center the content of each user item */
+}
+
+.active-user-username {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.online-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: green;
+    border-radius: 50%;
+    margin-left: auto;          /* Keeps the indicator to the far right */
+}
+
+.no-active-friends-message{
+    display: flex;
+    color: white;
+    justify-content: center;
+    margin-top: 50px;
+}

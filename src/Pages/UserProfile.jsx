@@ -3,14 +3,24 @@ import React from 'react';
 
 import Menu from '../Components/MainPage/Menu';
 import UserProfileHeader from '../Components/ProfilePage/UserProfileHeader';
+import PostContainer from '../Components/Posts/PostContainer';
+import '../Styles/Pages/ProfilePage.css';
 
 function UserProfile() {
     // let { userId } = useParams();
 
     return (
-        <div id="user-profile-page" className='user-profile-page'>
-            <UserProfileHeader/>
-            <Menu/>
+        <div id="profile-page" className='profile-page'>
+            <Menu />
+            <div className='profile-page-content'>
+                <div className='profile-header-component'>
+                    <UserProfileHeader />
+                </div>
+
+                <PostContainer />
+
+            </div>
+
         </div>
     );
 }

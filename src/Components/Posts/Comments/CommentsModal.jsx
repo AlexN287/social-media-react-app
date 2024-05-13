@@ -48,6 +48,19 @@ const CommentsModal = ({ isOpen, onClose, post, mediaUrl }) => {
         }
     };
 
+    const handleDeleteComment = (commentId) => {
+        setComments(currentComments => currentComments.filter(comment => comment.id !== commentId));
+    };
+
+    const handleUpdateComment = (commentId, updatedText) => {
+        setComments(currentComments => currentComments.map(comment => {
+            if (comment.id === commentId) {
+                return { ...comment, content: { ...comment.content, textContent: updatedText }};
+            }
+            return comment;
+        }));
+    };
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} header="Comments">
             <div className="comments-layout">
@@ -63,7 +76,7 @@ const CommentsModal = ({ isOpen, onClose, post, mediaUrl }) => {
                             <ul>
                                 {comments.length > 0 ? comments.map(comment => (
                                     <li key={comment.id}>
-                                        <CommentItem key={comment.id} comment={comment} token={token} />
+                                        <CommentItem key={comment.id} comment={comment} onDelete={handleDeleteComment} onUpdate={handleUpdateComment}/>
                                     </li>
                                 )) : <p>No comments to display.</p>}
                             </ul>

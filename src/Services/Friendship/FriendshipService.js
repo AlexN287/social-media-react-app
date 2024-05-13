@@ -52,3 +52,41 @@ export async function sendFriendRequest(token, senderId, receiverId) {
         }
     }
 };
+
+export const fetchFriendRequests = async (token) => {
+    try {
+        const response = await axios.get(`${API_URL}/requests`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching friend requests:', error);
+        throw error;
+    }
+};
+
+export const acceptFriendRequest = async (senderId, token) => {
+    try {
+        const response = await axios.post(`${API_URL}/acceptRequest`, null, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            params: { senderId }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error accepting friendship request:', error);
+        throw error;
+    }
+};
+
+export const declineFriendRequest = async (senderId, token) => {
+    try {
+        const response = await axios.patch(`${API_URL}/declineRequest`, null, {
+            headers: { 'Authorization': `Bearer ${token}` },
+            params: { senderId }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error declining friendship request:', error);
+        throw error;
+    }
+};

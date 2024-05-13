@@ -57,3 +57,34 @@ export async function getLoggedUser(token) {
         throw error; // Re-throw the error if you want to handle it in the component
     }
 }
+
+export async function fetchUserDetails(userId, token) {
+    const url = `${API_BASE_URL}/${userId}`;
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response.data;  // Axios automatically parses the JSON response
+    } catch (error) {
+        console.error('Error fetching user details:', error.response ? error.response.data : error.message);
+        throw error; // Rethrow the error if you want to handle it in the calling function
+    }
+}
+
+export const fetchConnectedFriends = async (token) => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/connectedFriends`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data; // Return the data directly
+    } catch (err) {
+        console.error('Failed to fetch connected friends:', err);
+        throw new Error('Failed to fetch connected friends'); // Throw an error to be handled by the caller
+    }
+};

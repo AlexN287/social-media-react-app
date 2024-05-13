@@ -5,6 +5,7 @@
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%); */
+  position: relative;
 }
 
 .search-form {
@@ -63,6 +64,8 @@
   border-radius: 0 0 4px 4px;
   z-index: 3; /* Ensure it's above the input and button */
   overflow: hidden; /* Hide overflow to maintain the border-radius */
+  border: 1px solid aliceblue;
+  border-radius: 10px;
 }
 
 /* Rest of the styles remain unchanged */

@@ -46,3 +46,40 @@ export const addComment = async (postId, commentText, token) => {
         throw error;
     }
 };
+
+export const deleteComment = async (commentId, token) => {
+    try {
+        const response = await axios.delete(`${API_BASE_URL}/${commentId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;  // You might return the response or handle it according to your needs
+    } catch (error) {
+        console.error('Failed to delete comment:', error);
+        if (error.response) {
+            throw new Error(error.response.data);
+        } else {
+            throw new Error("Network Error");
+        }
+    }
+};
+
+export async function updateCommentText(commentId, newText, token) {
+    // Create URLSearchParams object to handle form data.
+    const params = new URLSearchParams();
+    params.append('text', newText);
+
+    try {
+        const response = await axios.patch(`${API_BASE_URL}/edit/${commentId}`, params, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded' // Ensuring the content type is set for form data
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update comment:', error);
+        throw error; // Rethrow to handle it in the component
+    }
+}

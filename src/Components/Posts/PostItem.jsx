@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { getLikesCount } from '../../Services/Posts/LikeService';
 import { getCommentsCount } from '../../Services/Posts/CommentService';
 import '../../Styles/Components/Posts/PostItem.css';
@@ -13,21 +14,28 @@ import { checkUserLikedPost } from '../../Services/Posts/LikeService';
 import UserProfileImage from '../Common/ProfileImage';
 import { formatDateOrTime } from '../../Helper/Util';
 import OptionsButton from '../Common/OptionButton';
+import Button from '../Common/Button';
+import { deletePost } from '../../Services/Posts/PostService';
+import { updatePostContent } from '../../Services/Posts/PostService';
+import EditPostModal from './EditPostModal';
 
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post, onDelete, onUpdate }) => {
     const { content, user, createdAt } = post;
-    const [profileImageUrl, setProfileImageUrl] = useState('');
     const [likesCount, setLikesCount] = useState(0);
     const [commentsCount, setCommentsCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     const [showExplosion, setShowExplosion] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
-    const toggleModal = () => setModalOpen(!modalOpen);
     const token = localStorage.getItem('token');
     const [mediaUrl, setMediaUrl] = useState(null);
     const [mediaLoading, setMediaLoading] = useState(false);
     const [showLikesModal, setShowLikesModal] = useState(false);
+    const [showCommentsModal, setShowCommentsModal] = useState(false);
+    const [showEditPostModal, setShowEditPostModal] = useState(false);
+    const location = useLocation();
+
+    const toggleCommentsModal = () => setShowCommentsModal(!showCommentsModal);
+    const toggleEditPostModal = () => setShowEditPostModal(!showEditPostModal);
 
     const openLikesModal = () => {
         setShowLikesModal(true);
@@ -42,7 +50,7 @@ const PostItem = ({ post }) => {
             setMediaLoading(true);
             try {
                 if (post.content.filePath != null) {
-                    const mediaUrl = await fetchPostMedia(post.id, token); // Assuming this method handles cases where there is no media and returns null or an appropriate URL.
+                    //const mediaUrl = await fetchPostMedia(post.id, token); // Assuming this method handles cases where there is no media and returns null or an appropriate URL.
                     setMediaUrl(mediaUrl);
                     console.log(mediaUrl);
                 }
@@ -93,20 +101,38 @@ const PostItem = ({ post }) => {
         setTimeout(() => setShowExplosion(false), 500); // Duration of the animation
     };
 
+    const handleDeletePost = async () => {
+        try {
+            await deletePost(post.id, token);  // Assuming deletePost is an API call function
+            // Optionally, trigger a UI update or redirect
+            onDelete(post.id);
+        } catch (error) {
+            console.error('Failed to delete post:', error);
+            alert('Failed to delete the post.');
+        }
+    };
+
+
     return (
         <div className="post-item">
 
             <div className="post-header">
-            <div className="post-user-details">
-            <UserProfileImage userId={user.id} token={token} size={'small'}/>
-                <strong>{user.username}</strong>
+                <div className="post-user-details">
+                    <UserProfileImage userId={user.id} token={token} size={'small'} />
+                    <strong>{user.username}</strong>
                 </div>
 
                 <div className='post-header-right-side'>
-                <small>{formatDateOrTime(createdAt)}</small>
-                <OptionsButton className='das'/>
+                    <small>{formatDateOrTime(createdAt)}</small>
+                    {location.pathname === '/myprofile' && (
+                    <OptionsButton>
+                        <button onClick={toggleEditPostModal}>Edit Post</button>
+                        <button onClick={handleDeletePost}>Delete Post</button>
+                    </OptionsButton>
+                )}
+
                 </div>
-                
+
             </div>
 
             <p>{content.textContent}</p>
@@ -115,7 +141,7 @@ const PostItem = ({ post }) => {
             ) : null
             }
 
-            
+
 
             <div className='post-buttons-container'>
                 <LikeButton
@@ -126,14 +152,14 @@ const PostItem = ({ post }) => {
                     likesCount={likesCount}
                 />
 
-                <button onClick={toggleModal} className="comment-button" aria-label="View comments">
+                <button onClick={toggleCommentsModal} className="comment-button" aria-label="View comments">
                     💬 Comments ({commentsCount})
                 </button>
             </div>
 
             <CommentsModal
-                isOpen={modalOpen}
-                onClose={toggleModal}
+                isOpen={showCommentsModal}
+                onClose={toggleCommentsModal}
                 post={post}
                 mediaUrl={mediaUrl}
             />
@@ -141,6 +167,14 @@ const PostItem = ({ post }) => {
                 isOpen={showLikesModal}
                 onClose={closeLikesModal}
                 postId={post.id} // Assuming postId is available
+            />
+
+            <EditPostModal
+                isOpen={showEditPostModal}
+                onClose={toggleEditPostModal}
+                post={post}
+                onUpdate={onUpdate}
+                mediaUrl={mediaUrl}
             />
         </div>
     );

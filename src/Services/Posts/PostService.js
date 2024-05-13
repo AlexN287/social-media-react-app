@@ -5,12 +5,12 @@ const API_URL = 'http://localhost:8080/post'; // Adjust based on your actual API
 export function createPost(token, text, file = null) {
   const formData = new FormData();
   formData.append('text', text);
+  console.log(text);
   if (file) formData.append('file', file);
 
   const config = {
       headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
       },
   };
 
@@ -108,3 +108,42 @@ export async function fetchFriendsPosts(token) {
     }
 }
 
+export const deletePost = async (postId, token) => {
+    try {
+        const response = await axios.delete(`${API_URL}/${postId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}` // Ensure the header is properly formatted
+            }
+        });
+
+        // Handle response here if needed
+        console.log('Post deleted successfully:', response);
+    } catch (error) {
+        // Handle errors
+        console.error('Failed to delete post:', error);
+        throw error; // Re-throw to handle it in the calling component
+    }
+};
+
+export const updatePostContent = async (postId, content, file, token) => {
+    const formData = new FormData();
+    formData.append('content', content);
+    if (file) {
+        formData.append('file', file);
+    }
+
+    try {
+        const response = await axios.patch(`${API_URL}/${postId}/updateContent`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
+        console.log('Post content and file updated successfully:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to update post content and file:', error);
+        throw error;
+    }
+};

@@ -17,7 +17,7 @@ const AddPostModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      await createPost(token, file, text); // Assuming createPost is a method from your PostService
+      await createPost(token, text, file); // Assuming createPost is a method from your PostService
       setMessage('Post created successfully!');
       setMessageType('success');
       setTimeout(() => {

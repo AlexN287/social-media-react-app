@@ -12,6 +12,7 @@ import UserProfile from './Pages/UserProfile';
 import ChatPage from './Pages/ConversationPage';
 import { AuthProvider } from './Context/AuthContext';
 import { LoadingProvider } from './Context/LoadingContext';
+import { WebSocketProvider } from './Context/WebSocketContext';
 
 function App() {
   // const [isCompact, setIsCompact] = useState(false);
@@ -19,16 +20,30 @@ function App() {
   return (
     <div className="App">
       <Router>
-        
-        
-          <Routes>
-            <Route path="/" element={<SignIn />} />
-            <Route path="/home" element={<MainPage />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/myprofile" element={<ProfilePage />} />
-            <Route path="/profile/:userId" element={<UserProfile />} />
-            <Route path="/messages" element={<ChatPage />} />
-          </Routes>
+        <Routes>
+          <Route path="/" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/home" element={
+            <WebSocketProvider>
+              <MainPage />
+            </WebSocketProvider>
+          } />
+          <Route path="/myprofile" element={
+            <WebSocketProvider>
+              <ProfilePage />
+            </WebSocketProvider>
+          } />
+          <Route path="/profile/:userId" element={
+            <WebSocketProvider>
+              <UserProfile />
+            </WebSocketProvider>
+          } />
+          <Route path="/messages" element={
+            <WebSocketProvider>
+              <ChatPage />
+            </WebSocketProvider>
+          } />
+        </Routes>
       </Router>
     </div>
   );

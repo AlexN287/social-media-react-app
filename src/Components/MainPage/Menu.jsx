@@ -4,12 +4,14 @@ import { useLocation, Link } from 'react-router-dom';
 import '../../Styles/Components/MainPage/Menu.css';
 import Notification from './Notification';
 import AddPostModal from '../Posts/AddPostModal';
+import { useWebSocket } from '../../Context/WebSocketContext';
 import axios from 'axios';
 
 const Menu = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [friendshipRequestsCount, setFriendshipRequestsCount] = useState(0);
   const location = useLocation();
+  const { client } = useWebSocket();
 
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(() => {
     const saved = sessionStorage.getItem('isMenuCollapsed');
@@ -23,8 +25,12 @@ const Menu = () => {
     setShowNotifications(!showNotifications);
   };
 
+  const incrementFriendshipRequestCount = () => {
+    setFriendshipRequestsCount(prevCount => prevCount + 1);
+  };
+
   const decrementFriendshipRequestCount = () => {
-    setFriendshipRequestsCount(prevCount => prevCount - 1);
+    setFriendshipRequestsCount(prevCount => Math.max(0, prevCount - 1));
   };
 
   useEffect(() => {
@@ -50,6 +56,20 @@ const Menu = () => {
       sessionStorage.setItem('isMenuCollapsed', 'false');
     }
   }, [location.pathname]);
+
+  // useEffect(() => {
+  //   console.log(client);
+  //   if (client) {
+  //     const subscription = client.subscribe('/app/updateFriendshipRequestsCount', message => {
+  //       const notification = JSON.parse(message.body);
+  //       alert(notification.message);  // Show notification message
+  //       incrementFriendshipRequestCount();  // Increment the count upon receiving a new request
+  //     });
+  
+  //     return () => subscription.unsubscribe();
+  //   }
+  // }, [client]);
+  
 
   return (
     <div className={`menu-main-container ${isMenuCollapsed ? 'collapsed' : ''}`}>
@@ -96,7 +116,7 @@ const Menu = () => {
 
       {showNotifications && (
         <div className="notifications-menu">
-          <Notification onUpdate={decrementFriendshipRequestCount} />
+          <Notification onUpdate={decrementFriendshipRequestCount} onWebSocket={incrementFriendshipRequestCount}/>
         </div>
       )}
     </div>

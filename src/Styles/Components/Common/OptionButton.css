@@ -1,3 +1,7 @@
+.options-button-container{
+    position: relative;
+}
+
 .options-button {
     background-color: transparent; /* Transparent background */
     border: none; /* No border */
@@ -12,4 +16,29 @@
 
 .options-button:hover {
     color: #333; /* Darken the color on hover for feedback */
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* Position it right below the button */
+    left: 0;
+    width: 100px; /* Optional: Adjust width as needed */
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.dropdown-menu button {
+    display: block;
+    background: none;
+    border: none;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-menu button:hover {
+    background-color: #f0f0f0;
 }
