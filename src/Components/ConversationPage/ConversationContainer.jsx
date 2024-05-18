@@ -6,6 +6,7 @@ import AddMembersModal from './AddMembersModal';
 import { formatDateOrTime } from '../../Helper/Util';
 import { useWebSocket } from '../../Context/WebSocketContext';
 import { fetchMessages } from '../../Services/Message/MessageService';
+import { useNavigate } from 'react-router-dom';
 
 const ConversationContainer = ({ token, selectedConversationId, currentConversation, conversationImage }) => {
   const { client, sendMessage } = useWebSocket();
@@ -16,6 +17,7 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
   const [showGroupOptions, setShowGroupOptions] = useState(false);
   const [isShowMembersModalOpen, setIsShowMembersModalOpen] = useState(false);
   const [isAddMembersModalOpen, setIsAddMembersModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   // Function to toggle the group options menu
   const toggleGroupOptions = () => {
@@ -27,12 +29,21 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
   }, [currentConversation]);
 
   useEffect(() => {
-    // Fetch messages for the selected conversation
+    const loadMessages = async () => {
+if(selectedConversationId){
+  
+  try {
+    const msgs = await fetchMessages(selectedConversationId, token);
+    setMessages(msgs);
+  } catch (err) {
 
+    console.error(err);
+  }
+}
 
-    if (selectedConversationId) {
-      fetchMessages(selectedConversationId);
-    }
+    };
+
+    loadMessages();
   }, [selectedConversationId, token]);
 
   useEffect(() => {
@@ -64,40 +75,45 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
 
     if (!client || !selectedConversationId) {
       return;
-  }
+    }
 
-  // Subscribe to the WebSocket messages for the selected conversation
-  const subscription = client.subscribe(`/topic/conversations/${selectedConversationId}`, (msg) => {
+    // Subscribe to the WebSocket messages for the selected conversation
+    const subscription = client.subscribe(`/topic/conversations/${selectedConversationId}`, (msg) => {
       const receivedMessage = JSON.parse(msg.body);
       setMessages(prevMessages => [...prevMessages, receivedMessage]);
       // Use your event bus or any other state management as needed
       eventBus.emit('updateLastMessage', {
-          conversationId: receivedMessage.conversationId,
-          lastMessage: receivedMessage.content,
-          lastUpdated: new Date().toISOString()
+        conversationId: receivedMessage.conversationId,
+        lastMessage: receivedMessage.content,
+        lastUpdated: new Date().toISOString()
       });
-  });
+    });
 
-  // Clean up the subscription when component unmounts or dependencies change
-  return () => {
+    // Clean up the subscription when component unmounts or dependencies change
+    return () => {
       subscription.unsubscribe();
-  };
-}, [client, selectedConversationId]); // dependencies include client and selectedConversationId
+    };
+  }, [client, selectedConversationId]); // dependencies include client and selectedConversationId
 
-// Handle sending new messages
-const handleSendMessage = (event) => {
-  event.preventDefault();
-  if (messageContent.trim() !== '') {
+  // Handle sending new messages
+  const handleSendMessage = (event) => {
+    event.preventDefault();
+    if (messageContent.trim() !== '') {
       sendMessage(`/app/chat/${selectedConversationId}`, {
         senderId: loggedInUser?.id, // Sending the logged-in user's ID
         conversationId: selectedConversationId, // The conversation ID
         content: messageContent, // The message content
         type: "CHAT", // Message type
       });
-  }
+    }
 
-  setMessageContent('');
-};
+    setMessageContent('');
+  };
+
+  const handleVideoCallClick = () => {
+    //window.location.href = '\VideoCall.html';
+    navigate("/videocall");
+  };
 
   return (
     <div className="conversation-container">
@@ -118,17 +134,21 @@ const handleSendMessage = (event) => {
                     onClose={() => setIsShowMembersModalOpen(false)}
                     conversationId={selectedConversationId}
                   />
-                 <button onClick={() => setIsAddMembersModalOpen(true)}>Add Members</button>
-              <AddMembersModal
-                isOpen={isAddMembersModalOpen}
-                onClose={() => setIsAddMembersModalOpen(false)}
-                conversationId={selectedConversationId}
-                token={token} // Pass token if needed for API calls
-              />
+                  <button onClick={() => setIsAddMembersModalOpen(true)}>Add Members</button>
+                  <AddMembersModal
+                    isOpen={isAddMembersModalOpen}
+                    onClose={() => setIsAddMembersModalOpen(false)}
+                    conversationId={selectedConversationId}
+                    token={token} // Pass token if needed for API calls
+                  />
                 </div>
               )}
             </>
           )}
+
+          <button onClick={handleVideoCallClick} className="video-call-button">
+          📞
+          </button>
         </div>
 
       )}

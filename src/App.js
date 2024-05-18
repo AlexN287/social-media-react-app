@@ -13,6 +13,8 @@ import ChatPage from './Pages/ConversationPage';
 import { AuthProvider } from './Context/AuthContext';
 import { LoadingProvider } from './Context/LoadingContext';
 import { WebSocketProvider } from './Context/WebSocketContext';
+import VideoCall from './Components/ConversationPage/VideoCall';
+
 
 function App() {
   // const [isCompact, setIsCompact] = useState(false);
@@ -43,6 +45,13 @@ function App() {
               <ChatPage />
             </WebSocketProvider>
           } />
+
+<Route path="/videocall" element={
+            
+              <VideoCall />
+            
+          } />
+          
         </Routes>
       </Router>
     </div>
