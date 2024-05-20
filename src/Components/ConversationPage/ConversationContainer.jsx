@@ -7,8 +7,12 @@ import { formatDateOrTime } from '../../Helper/Util';
 import { useWebSocket } from '../../Context/WebSocketContext';
 import { fetchMessages } from '../../Services/Message/MessageService';
 import { useNavigate } from 'react-router-dom';
+import { getConversationMembers } from '../../Services/Conversation/ConversationService';
 
-const ConversationContainer = ({ token, selectedConversationId, currentConversation, conversationImage }) => {
+import { useCallInvitation } from '../../Context/CallInvitationContext';
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
+
+const ConversationContainer = ({ token, selectedConversationId, currentConversation, conversationImage}) => {
   const { client, sendMessage } = useWebSocket();
   const [messageContent, setMessageContent] = useState('');
   const [messages, setMessages] = useState([]);
@@ -18,6 +22,9 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
   const [isShowMembersModalOpen, setIsShowMembersModalOpen] = useState(false);
   const [isAddMembersModalOpen, setIsAddMembersModalOpen] = useState(false);
   const navigate = useNavigate();
+  const zp = useCallInvitation();
+
+  const [members, setMembers] = useState([]);
 
   // Function to toggle the group options menu
   const toggleGroupOptions = () => {
@@ -110,10 +117,42 @@ if(selectedConversationId){
     setMessageContent('');
   };
 
-  const handleVideoCallClick = () => {
-    //window.location.href = '\VideoCall.html';
-    navigate("/videocall");
+  useEffect(() => {
+    
+    const fetchMembers = async () => {
+      try {
+        const data = await getConversationMembers(selectedConversationId, token);
+        setMembers(data);
+      } catch (error) {
+        console.error('Failed to fetch conversation members');
+      } 
+    };
+
+    if(selectedConversationId){
+      fetchMembers();
+    }
+
+    
+  }, [selectedConversationId, token]);
+
+  const handleInvite = () => {
+    const callees = members.map(member => ({
+      userID: member.id + "", // Ensure userID is a string
+      userName: member.name
+    }));
+    
+    zp.sendCallInvitation({
+      callees,
+      callType: ZegoUIKitPrebuilt.InvitationTypeVideoCall,
+      timeout: 60, // Timeout duration (second). 60s by default, range from [1-600s].
+    }).then((res) => {
+      console.warn(res);
+    })
+    .catch((err) => {
+      console.warn(err);
+    });
   };
+
 
   return (
     <div className="conversation-container">
@@ -146,9 +185,10 @@ if(selectedConversationId){
             </>
           )}
 
-          <button onClick={handleVideoCallClick} className="video-call-button">
+          <button onClick={handleInvite} className="video-call-button">
           📞
           </button>
+
         </div>
 
       )}

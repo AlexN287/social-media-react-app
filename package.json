@@ -16,7 +16,8 @@
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zego-zim-web": "^2.5.0"
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 
@@ -8,8 +9,12 @@ const WebSocketContext = createContext(null);
 export const WebSocketProvider = ({ children }) => {
     const [client, setClient] = useState(null);
     const token = localStorage.getItem('token');
+    const location = useLocation();
 
     useEffect(() => {
+        // Check if the current path is not /signin or /signup
+        if (location.pathname === '/' || location.pathname === '/signup') return;
+
         const socket = new SockJS('http://localhost:8080/ws');
         const stompClient = Stomp.over(socket);
 
@@ -27,7 +32,7 @@ export const WebSocketProvider = ({ children }) => {
                 });
             }
         };
-    }, []);
+    }, [location.pathname, token]);
 
     const sendMessage = (destination, message) => {
         if (client && client.connected) {
