@@ -1,0 +1,29 @@
+/* Styles for the select element and its options */
+.report-styled-select {
+    width: 300px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: aliceblue;
+    font-size: 16px;
+    text-align: center;
+    border: 2px solid #3498db;
+    border-radius: 4px;
+    background-color: #1e1e1e;
+    -webkit-appearance: none; /* Remove default styling for webkit browsers */
+    -moz-appearance: none; /* Remove default styling for Firefox */
+    appearance: none; /* Remove default styling for other browsers */
+    cursor: pointer;
+  }
+  
+  .report-styled-select:focus {
+    outline: none;
+    border-color: #66afe9;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+  }
+  
+  .report-styled-select option {
+    padding: 10px;
+    font-size: 16px;
+  }
+  

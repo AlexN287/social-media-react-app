@@ -1,0 +1,19 @@
+.moderator-page-container{
+    display: flex;
+}
+.moderator-page-content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.reported-posts-container,
+.reports-list-container {
+    flex: 1;
+    padding: 20px;
+    color: white;
+    overflow-y: auto;
+    border: 1px solid #2ecc71; /* Optional: to visually separate the components */
+}
+

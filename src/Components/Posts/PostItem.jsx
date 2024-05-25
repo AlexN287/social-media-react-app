@@ -18,6 +18,9 @@ import Button from '../Common/Button';
 import { deletePost } from '../../Services/Posts/PostService';
 import { updatePostContent } from '../../Services/Posts/PostService';
 import EditPostModal from './EditPostModal';
+import { reportPost } from '../../Services/Report/ReportService';
+import { getLoggedUser } from '../../Services/User/UserService';
+import ReportPostModal from './ReportPostModal';
 
 
 const PostItem = ({ post, onDelete, onUpdate }) => {
@@ -32,10 +35,12 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
     const [showLikesModal, setShowLikesModal] = useState(false);
     const [showCommentsModal, setShowCommentsModal] = useState(false);
     const [showEditPostModal, setShowEditPostModal] = useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
     const location = useLocation();
 
     const toggleCommentsModal = () => setShowCommentsModal(!showCommentsModal);
     const toggleEditPostModal = () => setShowEditPostModal(!showEditPostModal);
+    const toggleReportModal = () => setShowReportModal(!showReportModal);
 
     const openLikesModal = () => {
         setShowLikesModal(true);
@@ -112,6 +117,14 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
         }
     };
 
+    const handleReportPost = async (reason) => {
+        try {
+            const loggedUser = await getLoggedUser(token);
+            await reportPost(post.id, reason, loggedUser, token);
+        } catch (error) {
+            console.error('Failed to report post:', error);
+        }
+    };
 
     return (
         <div className="post-item">
@@ -155,6 +168,10 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
                 <button onClick={toggleCommentsModal} className="comment-button" aria-label="View comments">
                     💬 Comments ({commentsCount})
                 </button>
+
+                <button onClick={toggleReportModal} className="report-button" aria-label="Report post">
+                    🚩 Report
+                </button>
             </div>
 
             <CommentsModal
@@ -175,6 +192,12 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
                 post={post}
                 onUpdate={onUpdate}
                 mediaUrl={mediaUrl}
+            />
+
+            <ReportPostModal 
+                isOpen={showReportModal}
+                onClose={toggleReportModal}
+                onSubmit={handleReportPost} // Pass the handleReportPost function to the modal
             />
         </div>
     );

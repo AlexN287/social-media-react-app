@@ -9,18 +9,6 @@
     margin-bottom: 20px; /* Adds space between post items */
 }
 
-
-.comment-button, .report-button{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-}
-
-
 .post-buttons-container {
     display: flex;
     justify-content: center;
@@ -56,5 +44,15 @@
     
 }
 
+.reported-posts-container{
+    background-color: black;
+}
 
+.reports-nr-container{
+    display: flex;
+    justify-content: center;
+}
 
+.reported-post-buttons{
+    display: flex;
+}

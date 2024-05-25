@@ -26,7 +26,12 @@ const UserProfileImage = ({ userId, token, size }) => {
         }
     }, [userId, token, setLoading]);
 
-    const imageClass = size === 'large' ? 'profile-image-large' : 'profile-image-small';
+    let imageClass = 'profile-image-small';
+    if (size === 'large') {
+        imageClass = 'profile-image-large';
+    } else if (size === 'medium') {
+        imageClass = 'profile-image-medium';
+    }
 
     return (
         <div className={imageClass}>

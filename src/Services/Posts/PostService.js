@@ -147,3 +147,22 @@ export const updatePostContent = async (postId, content, file, token) => {
         throw error;
     }
 };
+
+export const getPostsOrderedByReportCount = async (token) => {
+    try {
+        const response = await axios.get(`${API_URL}/reported/ordered`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            throw new Error(error.response.data || 'An unexpected error occurred');
+        } else if (error.request) {
+            throw new Error('No response from the server');
+        } else {
+            throw new Error('Error in setting up the request');
+        }
+    }
+};

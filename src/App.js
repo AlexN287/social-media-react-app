@@ -16,6 +16,8 @@ import { WebSocketProvider } from './Context/WebSocketContext';
 import VideoCall from './Components/ConversationPage/VideoCall';
 import { getLoggedUser } from './Services/User/UserService';
 import CallInvitationProvider from './Context/CallInvitationContext';
+import AdminPage from './Pages/Roles/AdminPage';
+import ModeratorPage from './Pages/Roles/ModeratorPage';
 
 
 function App() {
@@ -32,6 +34,8 @@ function App() {
               <Route path="/profile/:userId" element={<UserProfile />} />
               <Route path="/messages" element={<ChatPage />} />
               <Route path="/videocall" element={<VideoCall />} />
+              <Route path="/admin" element={<AdminPage/>} />
+              <Route path="/moderator" element={<ModeratorPage/>} />
             </Routes>
           </CallInvitationProvider>
         </WebSocketProvider>

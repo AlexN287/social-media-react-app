@@ -5,6 +5,8 @@ import '../../Styles/Components/MainPage/Menu.css';
 import Notification from './Notification';
 import AddPostModal from '../Posts/AddPostModal';
 import { useWebSocket } from '../../Context/WebSocketContext';
+import { checkIfUserIsAdmin } from '../../Services/Roles/AdminService';
+import { checkIfUserIsModerator } from '../../Services/Roles/ModeratorService';
 import axios from 'axios';
 
 const Menu = () => {
@@ -19,6 +21,8 @@ const Menu = () => {
   });
 
   const [isAddPostModalOpen, setAddPostModalOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isModerator, setIsModerator] = useState(false);
 
   // Toggle the visibility of the notifications menu
   const toggleNotifications = () => {
@@ -69,6 +73,24 @@ const Menu = () => {
   //     return () => subscription.unsubscribe();
   //   }
   // }, [client]);
+
+  useEffect(() => {
+    const checkAdminAndModeratorStatus = async () => {
+      const jwtToken = localStorage.getItem('token');
+      if (jwtToken) {
+        try {
+          const isAdmin = await checkIfUserIsAdmin(jwtToken);
+          const isModerator = await checkIfUserIsModerator(jwtToken);
+          setIsAdmin(isAdmin);
+          setIsModerator(isModerator);
+        } catch (error) {
+          console.error('Error checking user roles:', error);
+        }
+      }
+    };
+
+    checkAdminAndModeratorStatus();
+  }, []);
   
 
   return (
@@ -108,6 +130,22 @@ const Menu = () => {
               {!isMenuCollapsed && 'My Profile'}
             </Link>
           </li>
+          {isAdmin && (
+            <li>
+              <Link to="/admin">
+                <span className="icon" role="img" aria-label="Admin">🔧</span>
+                {!isMenuCollapsed && 'Admin'}
+              </Link>
+            </li>
+          )}
+          {isModerator && (
+            <li>
+              <Link to="/moderator">
+                <span className="icon" role="img" aria-label="Moderator">🛠️</span>
+                {!isMenuCollapsed && 'Moderator'}
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
 
