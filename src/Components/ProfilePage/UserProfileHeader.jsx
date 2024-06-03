@@ -7,11 +7,12 @@ import { checkFriendRequestExists, sendFriendRequest } from '../../Services/Frie
 import UserProfileImage from '../Common/ProfileImage';
 import Button from '../Common/Button';
 import { useWebSocket } from '../../Context/WebSocketContext';
+import { checkIfUserIsBlockedBy } from '../../Services/BlockList/BlockListService';
 
 import '../../Styles/Pages/ProfilePage.css';
 
 function UserProfileHeader() {
-    const { client } = useWebSocket();
+    const { client, sendMessage } = useWebSocket();
 
     const { userId } = useParams(); // This assumes you're using React Router and have a route setup to capture userId
     const [userDetails, setUserDetails] = useState({});
@@ -21,6 +22,7 @@ function UserProfileHeader() {
     const [buttonLabel, setButtonLabel] = useState('Add Friend');
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
     const token = localStorage.getItem('token'); // Assuming you're storing the token in localStorage
+    //const [isBlocked, setIsBlocked] = useState(false);
 
     useEffect(() => {
         const fetchDetails = async () => {
@@ -28,6 +30,15 @@ function UserProfileHeader() {
                 try {
                     const loggedUser = await getLoggedUser(token);  // This gets the logged-in user's details
                     console.log(loggedUser.id);
+
+
+                    // const blocked = await checkIfUserIsBlockedBy(token, userId);
+                    // setIsBlocked(blocked);
+                    // console.log('Is blocked: ' + blocked);
+
+                    // if (blocked) {
+                    //     return; // If the user is blocked, do not fetch further details
+                    // }
                     const userDetails = await fetchUserDetails(userId, token);
                     setUserDetails(userDetails);
 
@@ -69,14 +80,15 @@ function UserProfileHeader() {
             setIsButtonDisabled(true);
 
             // Send a notification through WebSocket
-            if (client) {
+            if (client && userId) {
                 const notification = {
                     id: loggedUser.id,
                     username: loggedUser.username,
                     email: loggedUser.email,
                     profileImagePath: loggedUser.profileImagePath
                 };
-                client.send(`/app/notifications/${userId}`, JSON.stringify(notification));
+                console.log("Udsadadadsefsef: " + userId);
+                sendMessage(`/app/notifications/${userId}`, notification);
 
                 //client.send('/app/updateFriendshipRequestsCount', JSON.stringify({ increment: true }));
             }
@@ -84,6 +96,10 @@ function UserProfileHeader() {
             console.error('Failed to send friend request:', error);
         }
     };
+
+    // if (isBlocked) {
+    //     return <div>You are blocked by this user and cannot view their profile.</div>;
+    // }
 
     if (!userDetails.username) {
         return <div>Loading...</div>;

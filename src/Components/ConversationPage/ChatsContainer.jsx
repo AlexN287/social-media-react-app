@@ -3,11 +3,24 @@ import React, { useState, useEffect } from 'react';
 import ConversationItem from './ConversationItem';
 import eventBus from '../../Helper/EventBus';
 import '../../Styles/Components/ConversationPage/ChatsContainer.css';
+import SearchBar from '../MainPage/SearchBar';
+import { searchUserConversations } from '../../Services/Search/SearchService';
+import AddConversationModal from './AddConversationModal';
+import { createGroupConversation, createPrivateConversation } from '../../Services/Conversation/ConversationService';
+import { getLoggedUser } from '../../Services/User/UserService';
+import { fetchFriendsList } from '../../Services/Friends/FriendsService';
 
 const ChatsContainer = ({ onSelectConversation }) => {
   const [conversations, setConversations] = useState([]);
   const [conversationImages, setConversationImages] = useState({});
   const token = localStorage.getItem('token');
+  const [showAddConversationModal, setShowAddConversationModal] = useState(false);
+  const [friends, setFriends] = useState([])
+  const [selectedFriendIds, setSelectedFriendIds] = useState([]);
+  const [groupName, setGroupName] = useState('');
+  const [groupImage, setGroupImage] = useState(null);
+  const [creationError, setCreationError] = useState('');
+  const [loggedUser, setLoggedUser] = useState(null);
 
   useEffect(() => {
     // Function to handle the event
@@ -102,16 +115,85 @@ const ChatsContainer = ({ onSelectConversation }) => {
     };
   }, []);
 
+  useEffect(() => {
+    getLoggedUser(token).then(user => {
+      setLoggedUser(user); // Set the logged user state
+      fetchFriendsList(user.id, token).then(friends => {
+        setFriends(friends);
+      });
+    });
+  }, [token]);
+
+  const handleSearchResults = (results) => {
+    setConversations(results); // Update the conversations state with search results
+  };
+
+  const handleAddConversationClick = () => {
+    setShowAddConversationModal(true);
+  };
+
+  const toggleFriendSelection = (friendId) => {
+    setSelectedFriendIds(prev => {
+      if (prev.includes(friendId)) {
+        // Remove the friend from the selection if already selected
+        console.log(friendId)
+        return prev.filter(id => id !== friendId);
+      } else {
+        // Add the friend to the selection if not already selected
+        return [...prev, friendId];
+      }
+    });
+  };
+
+  const handleSubmit = async () => {
+    if (selectedFriendIds.length === 1) {
+      await createPrivateConversation(selectedFriendIds[0], token, setCreationError);
+    } else if (selectedFriendIds.length > 1 && groupName) {
+      await createGroupConversation(groupName, selectedFriendIds, groupImage, token);
+      setGroupName('');
+      setGroupImage(null);
+    }
+    setSelectedFriendIds([]);
+  };
+
   return (
-    <div className="chat-list">
-      {conversations.map(conversation => (
-        <ConversationItem
-          key={conversation.id}
-          conversation={conversation}
-          onClick={() => onSelectConversation(conversation, conversationImages[conversation.id])}
-          //imageUrl={conversationImages[conversation.id]}
-        />
-      ))}
+    <div className="chats-container">
+      <div className="chats-header">
+          <h2>Chats</h2>
+        </div>
+      <div className='chats-search-header'>
+        <div className='chat-search-bar'>
+        <SearchBar
+        searchFunction={(term, token) => searchUserConversations(term, token)}
+        onSearchResults={handleSearchResults}
+        showResultsContainer={false}
+      />
+        </div>
+      <button className="add-conversation-btn" onClick={handleAddConversationClick}>+</button>
+      </div>
+      <div className="chat-list">
+        {conversations.map(conversation => (
+          <ConversationItem
+            key={conversation.id}
+            conversation={conversation}
+            onClick={() => onSelectConversation(conversation, conversationImages[conversation.id])}
+            //imageUrl={conversationImages[conversation.id]}
+          />
+        ))}
+      </div>
+      <AddConversationModal
+        isOpen={showAddConversationModal}
+        onClose={() => setShowAddConversationModal(false)}
+        friends={friends}
+        selectedFriendIds={selectedFriendIds}
+        toggleFriendSelection={toggleFriendSelection}
+        groupName={groupName}
+        setGroupName={setGroupName}
+        groupImage={groupImage}
+        setGroupImage={setGroupImage}
+        handleSubmit={handleSubmit}
+        creationError={creationError}
+      />
     </div>
   );
 };

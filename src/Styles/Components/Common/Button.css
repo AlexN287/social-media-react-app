@@ -34,3 +34,18 @@
 .button-red:hover {
     background: #e10416;
 }
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .button {
+        padding: 10px 30px; /* Smaller padding for buttons */
+        font-size: 14px; /* Smaller font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .button {
+        padding: 8px 20px; /* Even smaller padding for buttons */
+        font-size: 12px; /* Even smaller font size */
+    }
+}

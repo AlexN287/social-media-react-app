@@ -57,4 +57,14 @@
 }
 
 
-
+@media (max-width: 768px) {
+    .comment-button, .report-button {
+      font-size: 12px; /* Smaller font size */
+      padding: 4px 8px; /* Smaller padding */
+    }
+  
+    .like-button {
+      font-size: 12px; /* Smaller font size for like button */
+      padding: 4px 8px; /* Smaller padding */
+    }
+  }

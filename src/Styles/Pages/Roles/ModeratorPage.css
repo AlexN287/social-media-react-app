@@ -1,6 +1,9 @@
-.moderator-page-container{
+.moderator-page-container {
     display: flex;
+    height: 100vh;
+    background-color: black;
 }
+
 .moderator-page-content {
     display: flex;
     flex-direction: row;
@@ -8,12 +11,60 @@
     overflow-y: auto;
 }
 
+/* Responsive styles */
 .reported-posts-container,
-.reports-list-container {
+.reports-container {
     flex: 1;
     padding: 20px;
     color: white;
     overflow-y: auto;
-    border: 1px solid #2ecc71; /* Optional: to visually separate the components */
+    display: flex; /* Adding flex display */
+    flex-direction: column; /* Stacking elements vertically */
+    justify-content: flex-start; /* Centering elements vertically */
+    align-items: center; /* Centering elements horizontally */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 
+.reports-container {
+    background-color: black;
+    transform: translateX(0);
+}
+
+.reports-container.show {
+    transform: translateX(0);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .moderator-page-container {
+        flex-direction: column;
+    }
+
+    .reported-posts-container,
+    .reports-container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: none;
+    }
+
+    .reported-posts-container {
+        left: 0;
+        transform: translateX(0);
+    }
+
+    .reports-container {
+        right: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+    }
+
+    .reported-posts-container.hide {
+        transform: translateX(-100%);
+    }
+
+    .reports-container.show {
+        transform: translateX(0);
+    }
+}

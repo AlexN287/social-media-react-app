@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import eventBus from '../../Helper/EventBus';
 import ShowMembersModal from './ShowMembersModel';
 import '../../Styles/Components/ConversationPage/ConversationContainer.css';
 import AddMembersModal from './AddMembersModal';
+import MessagesList from './MessageList';
 import { formatDateOrTime } from '../../Helper/Util';
 import { useWebSocket } from '../../Context/WebSocketContext';
 import { fetchMessages } from '../../Services/Message/MessageService';
@@ -15,14 +16,17 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 const ConversationContainer = ({ token, selectedConversationId, currentConversation, conversationImage}) => {
   const { client, sendMessage } = useWebSocket();
   const [messageContent, setMessageContent] = useState('');
-  const [messages, setMessages] = useState([]);
-  const stompClientRef = useRef(null);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [showGroupOptions, setShowGroupOptions] = useState(false);
   const [isShowMembersModalOpen, setIsShowMembersModalOpen] = useState(false);
   const [isAddMembersModalOpen, setIsAddMembersModalOpen] = useState(false);
-  const navigate = useNavigate();
   const zp = useCallInvitation();
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const observer = useRef();
+  const [loading, setLoading] = useState(false);
+  const [newMessage, setNewMessage] = useState(null);
 
   const [members, setMembers] = useState([]);
 
@@ -34,24 +38,6 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
   useEffect(() => {
     console.log('Current conversation:', currentConversation);
   }, [currentConversation]);
-
-  useEffect(() => {
-    const loadMessages = async () => {
-if(selectedConversationId){
-  
-  try {
-    const msgs = await fetchMessages(selectedConversationId, token);
-    setMessages(msgs);
-  } catch (err) {
-
-    console.error(err);
-  }
-}
-
-    };
-
-    loadMessages();
-  }, [selectedConversationId, token]);
 
   useEffect(() => {
     // Fetch logged-in user profile
@@ -87,7 +73,7 @@ if(selectedConversationId){
     // Subscribe to the WebSocket messages for the selected conversation
     const subscription = client.subscribe(`/topic/conversations/${selectedConversationId}`, (msg) => {
       const receivedMessage = JSON.parse(msg.body);
-      setMessages(prevMessages => [...prevMessages, receivedMessage]);
+      setNewMessage(receivedMessage);
       // Use your event bus or any other state management as needed
       eventBus.emit('updateLastMessage', {
         conversationId: receivedMessage.conversationId,
@@ -153,7 +139,6 @@ if(selectedConversationId){
     });
   };
 
-
   return (
     <div className="conversation-container">
       {currentConversation && (
@@ -188,26 +173,12 @@ if(selectedConversationId){
           <button onClick={handleInvite} className="video-call-button">
           📞
           </button>
-
         </div>
 
       )}
-      <div className="messages-list">
-        {messages.map((message, index) => (
-          <div key={index} className="message-block">
-            {/* Apply different classes based on the sender of the message */}
-            <div className='message-timestamp'>
-              {formatDateOrTime(message.timestamp)}
-            </div>
-            <div className={`message ${message.senderId === loggedInUser?.id ? 'you' : 'them'}`}>
-              <span>{message.content}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+
+      <MessagesList conversationId={selectedConversationId} token={token} size={size} newMessage={newMessage}/>
       <form className="conversation-input" onSubmit={handleSendMessage}>
-
-
         <input type="text" placeholder="Write a message ..." value={messageContent} onChange={(e) => setMessageContent(e.target.value)} />
         <button type="submit">Send</button>
       </form>

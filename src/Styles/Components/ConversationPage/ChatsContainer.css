@@ -3,3 +3,59 @@
     padding: 0;
     cursor: pointer;
   }
+
+  .chats-container {
+    background-color: #000;
+    width: 460px; /* Adjust the width to take the sidebar's width into account */
+    height: 100vh;
+    overflow-y:auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .chats-header {
+    color: #3498db;
+    display: flex;
+    justify-content: center; /* Adjusted for centering */
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .chats-header h2 {
+    margin: 0;
+  }
+
+  .add-conversation-btn {
+    width: 30px; /* Size of the circle */
+    height: 30px; /* Size of the circle */
+    border-radius: 50%; /* Makes the button a circle */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    font-size: 24px; /* Adjust the size of the plus sign */
+    line-height: 30px; /* Center the plus sign vertically */
+    text-align: center; /* Center the plus sign horizontally */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Change mouse cursor on hover */
+    outline: none; /* Remove outline to keep the UI clean */
+  }
+  
+  /* Ensure the input and button are aligned nicely */
+  .add-conversation-btn {
+    margin-right: 10px;
+  }
+  
+  /* Adjust this value as needed to prevent the last item from having a margin */
+  .add-conversation-btn:last-child {
+    margin-right: 0;
+  }
+  
+  .chats-search-header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .chat-search-bar{
+    width: 90%;
+    margin-right: 10px;
+  }

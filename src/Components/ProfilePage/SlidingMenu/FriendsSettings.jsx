@@ -3,72 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import '../../../Styles/Components/ProfilePage/SlidingMenu/FriendsSettings.css';
 
-async function getLoggedUser(token) {
-    try {
-        const response = await fetch('http://localhost:8080/user/profile', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const user = await response.json();
-        return user;
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-}
-
-async function fetchUserProfileImage(userId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/user/${userId}/loadProfileImage`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return URL.createObjectURL(await response.blob());
-    } catch (error) {
-        console.error('Error fetching profile image:', error);
-    }
-}
-
-async function fetchFriendsList(userId, token) {
-    try {
-        const response = await fetch(`http://localhost:8080/friendsList/userFriends/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const friends = await response.json();
-        return friends;
-    } catch (error) {
-        console.error('Error fetching friends list:', error);
-    }
-}
-
+import { getLoggedUser } from '../../../Services/User/UserService';
+import UserProfileImage from '../../Common/ProfileImage';
+import { fetchFriendsList, deleteFriend } from '../../../Services/Friends/FriendsService';
+import { blockUser } from '../../../Services/BlockList/BlockListService';
 
 const FriendsSettings = ({onSave, onClose}) => {
     const [friends, setFriends] = useState([]);
     const [loggedUserId, setLoggedUserId] = useState(null);
-    const [friendImages, setFriendImages] = useState({});
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
@@ -78,12 +20,8 @@ const FriendsSettings = ({onSave, onClose}) => {
             setLoggedUserId(user.id);
             fetchFriendsList(user.id, token).then(friends => {
                 setFriends(friends);
-                // Fetch all profile images after setting friends
-                friends.forEach(friend => {
-                    fetchUserProfileImage(friend.id, token).then(imageSrc => {
-                        setFriendImages(prevImages => ({ ...prevImages, [friend.id]: imageSrc }));
-                    });
-                });
+                
+                
             });
         });
         
@@ -93,56 +31,24 @@ const FriendsSettings = ({onSave, onClose}) => {
         navigate(`/profile/${userId}`);
     };    
 
-    async function handleDeleteFriend(friendId) {
-        const token = localStorage.getItem('token');
-        console.log(`Delete friend ${friendId}`);
+    const handleDeleteFriend = async (friendId) => {
         try {
-            const response = await fetch(`http://localhost:8080/friendsList/delete/${friendId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-    
-            const result = await response.text();
-            if (response.ok) {
-                console.log(result);
-                setFriends(currentFriends => currentFriends.filter(friend => friend.id !== friendId));
-                onSave();
-            } else {
-                console.error(result);
-                // Handle the error state in the UI
-            }
+            await deleteFriend(friendId, token);
+            setFriends(currentFriends => currentFriends.filter(friend => friend.id !== friendId));
+            onSave();
         } catch (error) {
             console.error('Error deleting friend:', error);
-            // Handle the error state in the UI
         }
-    }
-    
-    async function handleBlockFriend(blockedUserId) {
-        const token = localStorage.getItem('token');
-        console.log(`Block friend ${blockedUserId}`);
+    };
+
+    const handleBlockFriend = async (blockedUserId) => {
         try {
-            const response = await fetch(`http://localhost:8080/blockList/blockUser/${blockedUserId}`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
-    
-            const result = await response.text();
-            if (response.ok) {
-                console.log(result);
-                // Update your state or UI as needed after successful blocking
-            } else {
-                console.error(result);
-                // Handle the error state in the UI, e.g., user is already blocked
-            }
+            await blockUser(blockedUserId, token);
+            setFriends(currentFriends => currentFriends.filter(friend => friend.id !== blockedUserId));
         } catch (error) {
             console.error('Error blocking user:', error);
-            // Handle the error state in the UI
         }
-    }
+    };
 
     return (
         <div className='friends-settings-container'>
@@ -151,11 +57,7 @@ const FriendsSettings = ({onSave, onClose}) => {
                 <ul>
                     {friends.map(friend => (
                         <li key={friend.id} className='friend-form'>
-                            {friendImages[friend.id] ? (
-                                <img className='friend-profile-image' onClick={() => handleUserClick(friend.id)} src={friendImages[friend.id]} alt={`${friend.username}'s profile`} style={{width: 50, height: 50}} />
-                            ) : (
-                                <div>Loading...</div>
-                            )}
+                            <UserProfileImage userId={friend.id} token={token} size={'small'}/>
                             <span className='friend-username' onClick={() => handleUserClick(friend.id)}>{friend.username}</span>
     
                             <div className='buttons'>

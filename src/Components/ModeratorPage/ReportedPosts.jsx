@@ -48,6 +48,7 @@ const ReportedPostsComponent = ({reportedPosts, setReportedPosts, onViewReports,
                 </div>
             ) : (
             <ul>
+                <h1>Posts Reported</h1>
                 {reportedPosts.map(post => (
                     <li key={post.id} className="post-item">
                         <div className="post-header">

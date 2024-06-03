@@ -1,10 +1,9 @@
 .conversation-container {
     background-color: #000;
-    position: fixed;
-    left: 570px;
+    /* left: 570px; */
     height: 100vh;
-    top: 0;
-    width: 133vh;
+    /* top: 0; */
+    width: 100wh;
     flex-grow: 1; /* Take up the remaining space next to the sidebar */
     display: flex;
     flex-direction: column; /* Stack elements vertically */
@@ -75,47 +74,6 @@
     font-size: 1.5em;
   }
   
-  .messages-list {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    overflow-y: auto; /* Allow scrolling */
-    padding: 10px;
-  }
-  
-  .message {
-    border: none;
-    color: #fff;
-    display: flex;
-    margin: 10px 0;
-    padding: 5px 10px;
-    border-radius: 20px;
-    max-width: 60%; /* Adjust width of message bubbles */
-  }
-  
-  .message.them {
-    background-color: #2ecc71; /* Different background for 'them' */
-    justify-content: flex-start; /* Align 'them' messages to the left */
-  }
-  
-  .message.you {
-    background-color: #007bff; /* Different background for 'you' */
-    justify-content: flex-end; /* Align 'you' messages to the right */
-    margin-left: auto; /* Pushes the message to the right */
-  }
-  
-  .message-block {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .message-timestamp {
-    align-self: center; /* Align timestamps to the right for 'you' */
-    font-size: 0.75rem;
-    color: #888;
-    margin-bottom: 2px; /* Spacing between timestamp and message */
-  }
-
   .conversation-input {
     display: flex;
     padding: 10px;

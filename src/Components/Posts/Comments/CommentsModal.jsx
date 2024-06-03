@@ -3,7 +3,7 @@ import Modal from '../../Common/Modal.jsx';
 import { fetchComments, addComment } from '../../../Services/Posts/CommentService.js';
 import MessageBanner from '../../Common/MessageBanner.jsx';
 import Button from '../../Common/Button.jsx';
-import InputField from '../../Auth/InputField.jsx';
+import InputField from '../../Common/InputField.jsx';
 //import { useAuth } from '../../../Context/AuthContext.js';
 import LoadingComponent from '../../Common/LoadingComponent.jsx';
 import '../../../Styles/Components/Posts/Comments/CommentsModal.css';
@@ -29,6 +29,7 @@ const CommentsModal = ({ isOpen, onClose, post, mediaUrl }) => {
         fetchComments(post.id, token)
             .then(comments => {
                 setComments(comments)
+                console.log(comments);
             })
             .catch(err => {
                 setError('Failed to load comments');

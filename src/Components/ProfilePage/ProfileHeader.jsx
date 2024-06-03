@@ -137,6 +137,7 @@ function ProfileHeader() {
                         <button onClick={() => handleMenuClick('changePassword')} className="menu-button">Change Password</button>
                         <button onClick={() => handleMenuClick('friendsSettings')} className="menu-button">Friends Settings</button>
                         <button onClick={() => handleMenuClick('blockedUsers')} className="menu-button">Blocked Users</button>
+                        <Button color={'red'} onClick={closeActionWindow}>Cancel</Button>
                     </div>
 
 

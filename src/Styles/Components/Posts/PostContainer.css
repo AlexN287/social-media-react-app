@@ -20,3 +20,9 @@
     padding: 20px;
 
 }
+
+@media (max-width: 768px) {
+    .post-container{
+        height: calc(100vh - 100px); 
+    }
+}

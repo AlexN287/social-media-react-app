@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import '../../Styles/Pages/Authentication/SignUpStyles.css';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../../Services/Auth/AuthService';
-import InputField from '../../Components/Auth/InputField';
-import FileInputField from '../../Components/Auth/FileInputField';
+import InputField from '../../Components/Common/InputField';
+import FileInputField from '../../Components/Common/FileInputField';
 import FormCard from '../../Components/Auth/FormCard';
 
 const SignUp = () => {

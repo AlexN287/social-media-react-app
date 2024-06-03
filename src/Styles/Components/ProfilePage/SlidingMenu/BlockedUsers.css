@@ -11,24 +11,17 @@
 .blocked-user-form {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 10px;
     border-bottom: 1px solid #2ecc71 /* Optional */
-}
-
-.blocked-user-profile-image {
-    width: 20%;
-    height: 20%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #fff;
-    cursor: pointer;
 }
 
 .blocked-user-username {
     display: block;
     color: white;
     cursor: pointer;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .blocked-user-form button{

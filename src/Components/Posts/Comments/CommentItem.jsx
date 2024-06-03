@@ -16,6 +16,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }) => {
     const isMyProfile = location.pathname === '/myprofile';
     const token = localStorage.getItem('token');
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [canEditOrDelete, setCanEditOrDelete] = useState(false);
 
     const openEditModal = () => setIsEditModalOpen(true);
     const closeEditModal = () => setIsEditModalOpen(false);
@@ -24,7 +25,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }) => {
         if (token) {
             getLoggedUser(token).then(data => {
                 setLoggedInUser(data); // Set the logged in user data
-                console.log(user.id);
+                setCanEditOrDelete(isMyProfile || user.id === loggedInUser.id);
             }).catch(error => {
                 console.error('Failed to fetch logged in user:', error);
             });
@@ -32,9 +33,6 @@ const CommentItem = ({ comment, onDelete, onUpdate }) => {
             console.error('No token found');
         }
     }, []);
-
-
-    const canEditOrDelete = isMyProfile || user.id === loggedInUser.id;
 
     const handleDeleteComment = async (commentId) => {
         try {

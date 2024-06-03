@@ -24,3 +24,11 @@
     border: 2px solid #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsive styles */
+/* @media (max-width: 768px) {
+    .profile-image-large img {
+      width: 100px;
+      height: 100px;
+    }
+  } */

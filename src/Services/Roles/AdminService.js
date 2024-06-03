@@ -24,14 +24,18 @@ export const checkIfUserIsAdmin = async (token) => {
     }
 };
 
-export const getAllUsersWithRoles = async (token) => {
+export const getAllUsersWithRoles = async (token, page = 0, size = 10) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/usersWithRoles`, {
             headers: {
                 'Authorization': `Bearer ${token}`
+            },
+            params: {
+                page: page,
+                size: size
             }
         });
-        return response.data; // This will be the list of users with roles
+        return response.data; // This will be the paginated result of users with roles
     } catch (error) {
         if (error.response) {
             throw new Error(error.response.data || 'An unexpected error occurred');

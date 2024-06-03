@@ -51,28 +51,34 @@ const Menu = () => {
     };
 
     fetchFriendshipRequestsCount();
+  }, []);
 
-    if (location.pathname === '/messages') {
-      setIsMenuCollapsed(true); // Or false, depending on your desired behavior
-      sessionStorage.setItem('isMenuCollapsed', 'true');
-    } else {
-      setIsMenuCollapsed(false); // This could also be a dynamic value or the opposite of your choice above
-      sessionStorage.setItem('isMenuCollapsed', 'false');
-    }
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMenuCollapsed(true);
+        sessionStorage.setItem('isMenuCollapsed', 'true');
+      } else {
+        setIsMenuCollapsed(false);
+        sessionStorage.setItem('isMenuCollapsed', 'false');
+      }
+    };
+
+    const updateMenuCollapse = () => {
+      if (location.pathname === '/messages' || window.innerWidth <= 768) {
+        setIsMenuCollapsed(true);
+        sessionStorage.setItem('isMenuCollapsed', 'true');
+      } else {
+        setIsMenuCollapsed(false);
+        sessionStorage.setItem('isMenuCollapsed', 'false');
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    updateMenuCollapse();
+
+    return () => window.removeEventListener('resize', handleResize);
   }, [location.pathname]);
-
-  // useEffect(() => {
-  //   console.log(client);
-  //   if (client) {
-  //     const subscription = client.subscribe('/app/updateFriendshipRequestsCount', message => {
-  //       const notification = JSON.parse(message.body);
-  //       alert(notification.message);  // Show notification message
-  //       incrementFriendshipRequestCount();  // Increment the count upon receiving a new request
-  //     });
-  
-  //     return () => subscription.unsubscribe();
-  //   }
-  // }, [client]);
 
   useEffect(() => {
     const checkAdminAndModeratorStatus = async () => {
@@ -91,6 +97,8 @@ const Menu = () => {
 
     checkAdminAndModeratorStatus();
   }, []);
+
+ 
   
 
   return (

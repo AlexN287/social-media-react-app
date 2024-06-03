@@ -19,7 +19,7 @@ const ReportsListComponent = ({ reports, onDeleteReport}) => {
                                 <p>Reported by: {report.user.username}</p>
                                 <p>Reason: {report.reason}</p>
                                 <p>Time: {formatDateOrTime(report.reportTime)}</p>
-                                <Button color={'red'} onClick={() => onDeleteReport(report.id)}>Delete Report</Button>
+                                <Button color={'red'} onClick={() => onDeleteReport(report.id)}>Delete</Button>
                             </li>
                         ))}
 

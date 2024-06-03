@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from '../Common/Modal';
 import Button from '../Common/Button';
-import InputField from '../Auth/InputField';
+import InputField from '../Common/InputField';
 import '../../Styles/Components/Posts/ReportPostModal.css';
 
 const REPORT_REASONS = [

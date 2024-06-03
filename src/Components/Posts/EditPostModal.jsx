@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../Common/Modal';
 import Button from '../Common/Button';
-import FileInputField from '../Auth/FileInputField';
+import FileInputField from '../Common/FileInputField';
 import AutoResizingTextarea from '../Posts/AutoResizingInput';
 import { updatePostContent } from '../../Services/Posts/PostService';
 

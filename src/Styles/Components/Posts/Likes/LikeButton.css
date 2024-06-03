@@ -52,3 +52,28 @@
         opacity: 0;
     }
 }
+
+@media (max-width: 768px) {
+    .like-button {
+        font-size: 12px; /* Smaller font size */
+        padding: 4px 8px; /* Smaller padding */
+    }
+
+    .likes-count {
+        font-size: 12px; /* Smaller font size for the count */
+    }
+
+    .explosion {
+        width: 0;
+        height: 0;
+        animation: color-explosion-small 0.5s ease-out forwards;
+    }
+
+    @keyframes color-explosion-small {
+        to {
+            width: 70px;
+            height: 70px;
+            opacity: 0;
+        }
+    }
+}

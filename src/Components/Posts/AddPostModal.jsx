@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Modal from '../Common/Modal';
 import { createPost } from '../../Services/Posts/PostService';
 import Button from '../Common/Button';
-import FileInputField from '../Auth/FileInputField';
+import FileInputField from '../Common/FileInputField';
 import AutoResizingTextarea from './AutoResizingInput';
 import MessageBanner from '../Common/MessageBanner.jsx';
 

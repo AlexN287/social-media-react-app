@@ -14,6 +14,11 @@ const jwtToken = localStorage.getItem('token');
 const navigate = useNavigate();
 const { client } = useWebSocket();
 
+const [isMenuCollapsed, setIsMenuCollapsed] = useState(() => {
+    const saved = sessionStorage.getItem('isMenuCollapsed');
+    return saved ? JSON.parse(saved) : false; // Convert string back to boolean
+  });
+
 useEffect(() => {
     fetchFriendRequests(localStorage.getItem('token')).then(data => {
         setFriendRequests(data);
@@ -33,7 +38,7 @@ useEffect(() => {
         const notification = JSON.parse(message.body);
         alert(notification.message); // Display notification message
         // Optionally update the state to render the notification in the UI
-        setFriendRequests(prevRequests => [...prevRequests, notification]);
+        //setFriendRequests(prevRequests => [...prevRequests, notification]);
         onWebSocket(); // Callback to handle any additional tasks
     });
 
@@ -70,7 +75,7 @@ const handleDecline = async (senderId) => {
 
 
 return (
-    <div className="notification-form">
+    <div className={`notification-form ${isMenuCollapsed ? 'collapsed' : ''}`}>
         <div className="friend-requests-container">
             {friendRequests.length > 0 ? friendRequests.map(request => (
                 <div key={request.id} className="friend-request">

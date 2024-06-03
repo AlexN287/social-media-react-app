@@ -1,0 +1,81 @@
+.selection-circle {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc; /* Gray border for the circle */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  
+  .selection-circle.selected {
+    border-color: #007bff; /* Blue border for selected state */
+    background-color: #007bff; /* Blue background for selected state */
+    color: white; /* White checkmark */
+  }
+  
+  .create-conversation-btn{
+    border: 0;
+      background: none;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      padding: 14px 40px;
+      outline: none;
+      color: white;
+      border-radius: 24px;
+      transition: 0.25s;
+      cursor: pointer;
+      transform: scale(1);
+      opacity: 1;
+      border: 2px solid #2ecc71;
+  }
+  
+  .create-conversation-btn:hover {
+    background-color: #2ecc71;
+  }
+  
+  .modal-add-conv-header {
+    color: #ccc;
+    text-align: center;
+  }
+  
+  .modal-add-conv-ul {
+    list-style-type: none; /* Removes default list styling */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the items vertically */
+  }
+  
+  .modal-add-conv-li{
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Aligns items vertically */
+    color: white; /* Sets the text color to white */
+    cursor: pointer;
+    padding: 10px; /* Adds some spacing around each list item */
+    width: 100%; /* Ensures list items fill the container width */
+  }
+  
+  .modal-add-conv-li:not(:last-child) {
+    border-bottom: 1px solid #007bff; /* Optional: adds a divider between items */
+  }
+  
+  .group-name, .group-image{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5px auto;
+    text-align: center;
+    border: 2px solid #3498db;
+    padding: 10px 20px; 
+    width: 80%;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+  }
+  

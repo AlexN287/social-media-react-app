@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthService from '../../Services/Auth/AuthService';
 import { useNavigate } from 'react-router-dom';
-import InputField from '../../Components/Auth/InputField';
+import InputField from '../../Components/Common/InputField';
 import FormCard from '../../Components/Auth/FormCard';
 import '../../Styles/Pages/Authentication/SignInStyles.css';
 
@@ -17,7 +17,11 @@ const SignIn = () => {
       await AuthService.signIn(username, password);
       navigate('/home'); // Navigate to the homepage upon successful login
     } catch (error) {
-      setError('Failed to log in');
+      if (error.response && error.response.status === 401) {
+        setError('Invalid username or password');
+      } else {
+        setError('Failed to log in. Please try again later.');
+      }
       console.error(error);
     }
   };
@@ -40,7 +44,7 @@ const SignIn = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <input type="submit" value="Sign Up" className="btn btn-primary" />
+        <input type="submit" value="Sign In" className="btn btn-primary" />
         <p className="text-muted">
           Don't have an account? Please <a href="/signup">Sign Up</a>
         </p>

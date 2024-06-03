@@ -3,26 +3,30 @@ import '../../Styles/Pages/Roles/AdminPage.css';
 import React, { useState, useEffect } from 'react';
 import Menu from '../../Components/MainPage/Menu';
 import { getAllUsersWithRoles, modifyUserRoles } from '../../Services/Roles/AdminService'; // Adjust the path as needed
-import Button from '../../Components/Common/Button';
-import UserProfileImage from '../../Components/Common/ProfileImage';
-import MessageBanner from '../../Components/Common/MessageBanner';
 import AdminSearchBar from '../../Components/AdminPage/AdminSearchBar';
+import UserItem from '../../Components/AdminPage/UserItem';
+import PaginationControls from '../../Components/Common/PaginationControls';
+import SearchBar from '../../Components/MainPage/SearchBar';
+import { searchUsersAsAdmin } from '../../Services/Search/SearchService';
 
-const ROLES = ['USER', 'MODERATOR', 'ADMIN'];
 
 const AdminPage = () => {
     const [usersWithRoles, setUsersWithRoles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null);
+    const [messages, setMessages] = useState({});
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         const fetchUsersWithRoles = async () => {
             const token = localStorage.getItem('token'); // Assuming token is stored in local storage
             if (token) {
                 try {
-                    const users = await getAllUsersWithRoles(token);
-                    setUsersWithRoles(users);
+                    const response = await getAllUsersWithRoles(token, page, size);
+                    setUsersWithRoles(response.content);
+                    setTotalPages(response.totalPages);
                     setLoading(false);
                 } catch (error) {
                     setError(error.message);
@@ -35,9 +39,12 @@ const AdminPage = () => {
         };
 
         fetchUsersWithRoles();
-    }, []);
+    }, [page, size]);
 
     const handleRoleChange = (userId, selectedRoles) => {
+        if (!selectedRoles.includes('USER')) {
+            selectedRoles.push('USER');
+        }
         // Ensure at least one role is selected
         if (selectedRoles.length === 0) {
             return;
@@ -59,26 +66,39 @@ const AdminPage = () => {
         if (token) {
             try {
                 const message = await modifyUserRoles(userId, roles, token);
-                setSuccessMessage(message);
-                setError(null);
+                setMessages(prevMessages => ({
+                    ...prevMessages,
+                    [userId]: { type: 'success', text: message }
+                }));
             } catch (error) {
-                setError(error.message);
-                setSuccessMessage(null);
+                setMessages(prevMessages => ({
+                    ...prevMessages,
+                    [userId]: { type: 'error', text: error.message }
+                }));
             }
         } else {
-            setError('No token found');
-            setSuccessMessage(null);
+            setMessages(prevMessages => ({
+                ...prevMessages,
+                [userId]: { type: 'error', text: 'No token found' }
+            }));
         }
     };
 
-    const handleBannerClose = () => {
-        setSuccessMessage(null);
-        setError(null);
-    };
-
+    const handleBannerClose = (userId) => {
+        setMessages(prevMessages => {
+          const newMessages = { ...prevMessages };
+          delete newMessages[userId];
+          return newMessages;
+        });
+      };
+    
     const handleSearchResults = (results) => {
         //setSearchResults(results);
         setUsersWithRoles(results);
+    };
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage);
     };
 
     if (loading) {
@@ -94,45 +114,28 @@ const AdminPage = () => {
             <Menu />
             <div className='admin-content'>
                 <div className='admin-search-bar'>
-                    <AdminSearchBar onSearchResults={handleSearchResults}/>
+                    <SearchBar searchFunction={searchUsersAsAdmin}
+                        onSearchResults={handleSearchResults}
+                        showResultsContainer={false}/>
                 </div>
-                {successMessage && <div>{successMessage}</div>}
                 {usersWithRoles.map(user => (
-                    <div key={user.id} className="user-row">
-                        <div className='change-roles-container'>
-                            <div className='admin-page-user-info'>
-                                <UserProfileImage userId={user.id} token={localStorage.getItem('token')} size={'medium'} />
-                                <div className="current-roles">
-                                    <h3>{user.username}</h3>
-                                    <strong>Current Roles:</strong> {user.roles.join(', ')}
-                                </div>
-                            </div>
-
-                            <div className="roles-select">
-                                <label>
-                                    Select New Roles:
-                                    <select
-                                        multiple
-                                        value={user.roles}
-                                        onChange={(e) => handleRoleChange(user.id, Array.from(e.target.selectedOptions, option => option.value))}
-                                    >
-                                        {ROLES.map(role => (
-                                            <option key={role} value={role}>{role}</option>
-                                        ))}
-                                    </select>
-                                </label>
-                            </div>
-
-                        </div>
-
-                        <div className="button-container">
-                            <Button color={'green'} onClick={() => handleSubmit(user.id, user.roles)}>Submit</Button>
-                        </div>
-                    </div>
+                    <UserItem
+                    key={user.id}
+                    user={user}
+                    handleRoleChange={handleRoleChange}
+                    handleSubmit={handleSubmit}
+                    message={messages[user.id]}
+                    handleBannerClose={handleBannerClose}
+                  />
                 ))}
-                {successMessage && <MessageBanner message={successMessage} type="success" onClose={handleBannerClose} />}
-                {error && <MessageBanner message={error} type="error" onClose={handleBannerClose} />}
+                <PaginationControls
+                    totalPages={totalPages}
+                    currentPage={page}
+                    onPageChange={handlePageChange}
+                />
+
             </div>
+
 
         </div>
     );

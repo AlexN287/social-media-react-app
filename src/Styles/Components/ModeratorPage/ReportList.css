@@ -1,15 +1,55 @@
-.reports-list-container{
+.reports-list-container {
     background-color: black;
-}
-
-.report-details{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center; /* Center the cards horizontally */
+  }
+  
+  .report-details {
     color: white;
-}
-
-.report-details li{
+    width: 100%; /* Ensure the details container takes full width */
+  }
+  
+  .report-details ul {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+    width: 100%; /* Ensure the list takes full width */
+  }
+  
+  .report-details li {
     border: 2px solid #2ecc71;
     border-radius: 10px;
-    margin-left: 150px;
-    margin-right: 150px;
-    margin-top: 20px;
-}
+    margin: 20px auto; /* Center the cards horizontally */
+    padding: 40px;
+    word-wrap: break-word; /* Ensure long words break to new lines */
+    word-break: break-all; /* Ensure long words break within themselves */
+    max-width: 800px; /* Set a maximum width for the cards */
+    width: 80%; /* Set the width of the cards */
+  }
+  
+  .report-details p {
+    margin: 10px 0; /* Add some spacing between paragraphs */
+    word-wrap: break-word; /* Ensure long words break to new lines */
+    word-break: break-all; /* Ensure long words break within themselves */
+  }
+  
+  .no-reports-message {
+    color: white;
+    text-align: center;
+  }
+  
+  /* Responsive Styles for Phones */
+  @media (max-width: 768px) {
+    .report-details li {
+      width: 90%; /* Increase width to take more space on smaller screens */
+      margin: 10px auto; /* Center the cards horizontally with more margin */
+      padding: 20px; /* Adjust padding for smaller screens */
+    }
+  
+    .reports-list-container {
+      padding: 10px; /* Reduce padding for smaller screens */
+    }
+  }
+  

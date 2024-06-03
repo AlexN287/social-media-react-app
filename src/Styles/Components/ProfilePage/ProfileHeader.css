@@ -60,7 +60,7 @@
     position: fixed;
     top: 0;
     right: 20%; /* Start aligned to the right edge */
-    width: 25%; /* The width of the edit window */
+    width: 250px; /* The width of the edit window */
     height: 100vh; /* Makes the edit window the same height as the viewport */
     background: #000;
     z-index: 1000;
@@ -98,5 +98,57 @@
     
 }
 
+@media (max-width: 768px) {
+    .button {
+      padding: 10px 30px; /* Smaller padding for buttons */
+      font-size: 14px; /* Smaller font size */
+      height: 36px; /* Adjust height for smaller screens */
+    }
+  
+    .username-and-actions {
+      gap: 5px;
+    }
+  
+    .username {
+      font-size: 20px; /* Adjust the font size */
+    }
+  
+    .user-stats span {
+      font-size: 14px; /* Smaller font size for stats */
+    }
+  
+    .profile-image-large img {
+      width: 100px; /* Smaller profile image size */
+      height: 100px; /* Smaller profile image size */
+    }
+
+    .action-window,
+    .sliding-window {
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 90px); /* Adjust height leaving space for menu */
+    top: 0; /* Position it below the menu */
+  }
+  }
+  
+  @media (max-width: 480px) {
+    .button {
+      padding: 8px 20px; /* Even smaller padding for buttons */
+      font-size: 12px; /* Even smaller font size */
+      height: 32px; /* Adjust height for even smaller screens */
+    }
+  
+    .username {
+      font-size: 18px; /* Adjust the font size */
+    }
+  
+    .user-stats span {
+      font-size: 12px; /* Even smaller font size for stats */
+    }
+  
+    
+
+    
+  }
 
 

@@ -4,6 +4,7 @@ import Menu from '../../Components/MainPage/Menu';
 import ReportsListComponent from '../../Components/ModeratorPage/ReportsListComponent';
 import { deletePost } from '../../Services/Posts/PostService';
 import { deleteReport } from '../../Services/Report/ReportService';
+import useSwipe from '../../Hooks/Common/useSwipe';
 
 import '../../Styles/Pages/Roles/ModeratorPage.css';
 
@@ -11,24 +12,24 @@ const ModeratorPage = () => {
     const [reportedPosts, setReportedPosts] = useState([]);
     const [reports, setReports] = useState(null);
     const [selectedPostId, setSelectedPostId] = useState(null);
+    const [showReports, setShowReports] = useState(false);
     const token = localStorage.getItem('token');
 
     const handleViewReports = (post) => {
         setReports(post.reports);
         setSelectedPostId(post.id);
+        setShowReports(true);
     };
 
     const handleCloseReports = () => {
         setReports(null);
+        setShowReports(false);
     };
 
-    
     const handleDeletePost = async (postId) => {
         try {
             await deletePost(postId, token);
-            // Update the reported posts state
             setReportedPosts(reportedPosts.filter(post => post.id !== postId));
-            // Clear reports if the deleted post was being viewed
             setReports(null);
         } catch (error) {
             console.error('Failed to delete post:', error);
@@ -49,23 +50,44 @@ const ModeratorPage = () => {
             }));
             if (updatedReports.length === 0) {
                 setReports(null);
-                setReportedPosts(reportedPosts.filter(post => post.id !== selectedPostId))
+                setReportedPosts(reportedPosts.filter(post => post.id !== selectedPostId));
                 setSelectedPostId(null);
+                setShowReports(false);
             }
         } catch (error) {
             console.error('Failed to delete report:', error);
         }
     };
 
+    const handleSwipeLeft = () => {
+        setShowReports(true); // Swipe left action
+    };
+
+    const handleSwipeRight = () => {
+        setShowReports(false); // Swipe right action
+    };
+
+    useSwipe(handleSwipeLeft, handleSwipeRight);
+
     return (
         <div className='moderator-page-container'>
             <Menu />
             <div className='moderator-page-content'>
-                <ReportedPostsComponent reportedPosts={reportedPosts} 
-                    setReportedPosts={setReportedPosts} 
-                    onViewReports={handleViewReports} 
-                    onDeletePost={handleDeletePost}  />
-                <ReportsListComponent reports={reports} onDeleteReport={handleDeleteReport}/>
+                <div className={`reported-posts-container ${showReports ? 'hide' : ''}`}>
+                    <ReportedPostsComponent 
+                        reportedPosts={reportedPosts} 
+                        setReportedPosts={setReportedPosts} 
+                        onViewReports={handleViewReports} 
+                        onDeletePost={handleDeletePost}  
+                    />
+                </div>
+                <div className={`reports-container ${showReports ? 'show' : ''}`}>
+                    <ReportsListComponent 
+                        reports={reports} 
+                        onDeleteReport={handleDeleteReport}
+                        onCloseReports={handleCloseReports}
+                    />
+                </div>
             </div>
         </div>
     );

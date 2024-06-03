@@ -12,6 +12,10 @@
     overflow-y: auto;
 }
 
+.notification-form.collapsed {
+  left: 100px; /* Adjust left position when the menu is collapsed */
+}
+
 .notification-list {
     display: flex;
     flex-direction: column;
@@ -74,3 +78,33 @@
     margin-top: 10%;
   }
   
+  @media (max-width: 768px) {
+    .notification-form.collapsed {
+      width: 100%;
+      top: 0%;
+      left: 0; /* Position it next to the collapsed menu */
+      height: calc(100vh - 100px); /* Full viewport height */
+      z-index: 1100; /* Ensure it is above other content */
+    }
+  
+    .menu-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 70px;
+      height: 70px;
+      z-index: 1200; /* Ensure the menu is above the notification form */
+    }
+
+    .friend-request {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .username-request {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+    
+  }
