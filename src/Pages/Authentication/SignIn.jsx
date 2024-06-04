@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../../Components/Common/InputField';
 import FormCard from '../../Components/Auth/FormCard';
 import '../../Styles/Pages/Authentication/SignInStyles.css';
+import MessageBanner from '../../Components/Common/MessageBanner';
+import Button from '../../Components/Common/Button';
 
 const SignIn = () => {
   const [username, setUsername] = useState('');
@@ -44,11 +46,11 @@ const SignIn = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <input type="submit" value="Sign In" className="btn btn-primary" />
+        <Button type="submit" color="green">Sign In</Button>
         <p className="text-muted">
           Don't have an account? Please <a href="/signup">Sign Up</a>
         </p>
-        {error && <p className="error-message">{error}</p>}
+        {error && <MessageBanner message={error} type={'error'}/>}
       </form>
     </FormCard>
     </div>

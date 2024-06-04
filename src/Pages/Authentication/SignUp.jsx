@@ -5,6 +5,8 @@ import AuthService from '../../Services/Auth/AuthService';
 import InputField from '../../Components/Common/InputField';
 import FileInputField from '../../Components/Common/FileInputField';
 import FormCard from '../../Components/Auth/FormCard';
+import MessageBanner from '../../Components/Common/MessageBanner';
+import Button from '../../Components/Common/Button';
 
 const SignUp = () => {
   const [username, setUsername] = useState('');
@@ -42,11 +44,11 @@ const SignUp = () => {
         <InputField type="password" name="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
         <InputField type="email" name="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
         <FileInputField name="profileImage" accept="image/*" onChange={e => setProfileImage(e.target.files[0])} />
-        <input type="submit" value="Sign Up" className="btn btn-primary" />
+        <Button type="submit" color="green">Sign Up</Button>
         <p className="text-muted">
           Already have an account? Please <a href="/">Sign In</a>
         </p>
-        {error && <p className="error-message">{error}</p>}
+        {error && <MessageBanner message={error} type={'error'}/>}
       </form>
     </FormCard>
     </div>

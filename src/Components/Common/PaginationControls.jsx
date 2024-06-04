@@ -73,13 +73,6 @@ const PaginationControls = ({ totalPages, currentPage, onPageChange }) => {
         <div className="pagination-controls">
             <button
                 className="pagination-button"
-                onClick={() => onPageChange(0)}
-                disabled={currentPage === 0}
-            >
-                First
-            </button>
-            <button
-                className="pagination-button"
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 0}
             >
@@ -92,13 +85,6 @@ const PaginationControls = ({ totalPages, currentPage, onPageChange }) => {
                 disabled={currentPage === totalPages - 1}
             >
                 Next
-            </button>
-            <button
-                className="pagination-button"
-                onClick={() => onPageChange(totalPages - 1)}
-                disabled={currentPage === totalPages - 1}
-            >
-                Last
             </button>
         </div>
     );

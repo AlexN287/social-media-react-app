@@ -78,3 +78,36 @@ export const createGroupConversation = async (groupName, members, groupImage, to
     // Handle errors (e.g., show an error message)
   }
 };
+
+export const fetchConversationsList = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/all`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching conversation list:', error);
+    return []; // Return an empty array as a fallback
+  }
+};
+
+export const fetchConversationImage = async (conversationId, token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/${conversationId}/image`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      responseType: 'blob',
+    });
+    const imageUrl = URL.createObjectURL(response.data);
+    return imageUrl;
+  } catch (error) {
+    console.error('Error fetching conversation image:', error);
+    return null; // Optionally return null or a default image URL in case of error
+  }
+};
+
+

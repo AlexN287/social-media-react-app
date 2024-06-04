@@ -9,7 +9,8 @@
 }
 
 .message-banner.error {
-    background-color: red;
+    background:none;
+    border: 1px solid red;
     color: white; /* White text for better contrast on red */
 }
 

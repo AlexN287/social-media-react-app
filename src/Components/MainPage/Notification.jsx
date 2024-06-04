@@ -35,7 +35,9 @@ useEffect(() => {
     if (!client) return;
 
     const subscription = client.subscribe('/user/queue/notifications', message => {
+        console.log("saxsssssssssssssssssssss");
         const notification = JSON.parse(message.body);
+        console.log(notification);
         alert(notification.message); // Display notification message
         // Optionally update the state to render the notification in the UI
         //setFriendRequests(prevRequests => [...prevRequests, notification]);

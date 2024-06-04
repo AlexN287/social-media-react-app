@@ -17,29 +17,6 @@ body {
     color: #ccc;
 }
 
-input[type="submit"] {
-    border: 0;
-    background: none;
-    display: block;
-    margin: 20px auto;
-    text-align: center;
-    border: 2px solid #2ecc71;
-    padding: 14px 40px;
-    outline: none;
-    color: white;
-    border-radius: 24px;
-    transition: 0.25s;
-    cursor: pointer;
-    transform: scale(1);
-    opacity: 1;
-}
-
-input[type="submit"]:hover {
-    background: #2ecc71;
-    transform: scale(1.05);
-    opacity: 0.8;
-}
-
 .text-muted {
     font-size: medium;
 }
@@ -53,6 +30,3 @@ input[type="submit"]:hover {
     text-decoration: underline;
 }
 
-.error-message {
-    color: white;
-}

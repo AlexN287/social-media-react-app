@@ -35,7 +35,7 @@
 }
 
 /* Responsive styles */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .moderator-page-container {
         flex-direction: column;
     }
@@ -43,7 +43,7 @@
     .reported-posts-container,
     .reports-container {
         position: fixed;
-        top: 0;
+        top: 70px;
         bottom: 0;
         width: 100%;
         max-width: none;

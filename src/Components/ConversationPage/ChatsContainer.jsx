@@ -6,7 +6,7 @@ import '../../Styles/Components/ConversationPage/ChatsContainer.css';
 import SearchBar from '../MainPage/SearchBar';
 import { searchUserConversations } from '../../Services/Search/SearchService';
 import AddConversationModal from './AddConversationModal';
-import { createGroupConversation, createPrivateConversation } from '../../Services/Conversation/ConversationService';
+import { createGroupConversation, createPrivateConversation, fetchConversationsList, fetchConversationImage} from '../../Services/Conversation/ConversationService';
 import { getLoggedUser } from '../../Services/User/UserService';
 import { fetchFriendsList } from '../../Services/Friends/FriendsService';
 
@@ -45,48 +45,6 @@ const ChatsContainer = ({ onSelectConversation }) => {
   }, []);
 
   useEffect(() => {
-    const fetchConversationsList = async (token) => {
-      try {
-        const response = await fetch('http://localhost:8080/conversation/all', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const conversations = await response.json();
-        return conversations;
-      } catch (error) {
-        console.error('Error fetching conversation list:', error);
-        return []; // Return an empty array as a fallback
-      }
-    };
-
-    const fetchConversationImage = async (conversationId, token) => {
-      try {
-        const response = await fetch(`http://localhost:8080/conversation/${conversationId}/image`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const imageUrl = URL.createObjectURL(await response.blob());
-        return imageUrl;
-      } catch (error) {
-        console.error('Error fetching conversation image:', error);
-        return null; // Optionally return null or a default image URL in case of error
-      }
-    };
 
     fetchConversationsList(token).then(conversations => {
       setConversations(conversations);

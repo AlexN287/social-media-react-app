@@ -44,19 +44,17 @@
 }
 /* Responsive styles */
 @media (max-width: 1024px) {
+  .menu-container{
+    height: 70px;
+    flex: none;
+  }
+
   .main-page-container {
     flex-direction: column;
   }
 
   .menu-container {
-    order: 1;
-    position: fixed;
-    bottom: 0%;
-  }
-
-  .right-container {
-    order: 2;
-    flex-direction: column;
+    width: 100%;
   }
 
   .connected-friends-container {

@@ -17,4 +17,16 @@
     margin-bottom: 20px;
 }
 
+@media (max-width: 1024px) {
+    .admin-page-container{
+        flex-direction: column;
+        align-items: center;
+    }
 
+    .admin-content {
+        width: calc(100% - 40px); /* Adjust width with some padding */
+        max-width: none; /* Allow full width */
+        padding: 10px;
+        border-left: none;
+    }
+}
