@@ -27,7 +27,7 @@ const PostContainer = () => {
             try {
                 if (userId) {
                     // Fetch posts for the user profile being viewed
-                    const fetchedUser = await fetchUserDetails(userId, token);  // Assuming fetchUserDetails fetches by userId
+                    const fetchedUser = await fetchUserDetails(userId, token);  
                     setUser(fetchedUser);
                     const postsData = await getAllPostsByUser(userId, token);
                     setPosts(postsData);

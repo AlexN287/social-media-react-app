@@ -1,6 +1,6 @@
-// Components/ChatPage/ConversationItem.jsx
+
 import React from 'react';
-import '../../Styles/Components/ConversationPage/ConversationItem.css'; // Adjust the path according to your structure
+import '../../Styles/Components/ConversationPage/ConversationItem.css'; 
 import { formatDateOrTime } from '../../Helper/Util';
 
 const ConversationItem = ({ conversation, onClick, imageUrl }) => (
@@ -9,7 +9,7 @@ const ConversationItem = ({ conversation, onClick, imageUrl }) => (
       {imageUrl ? (
         <img className='conversation-image' src={imageUrl} alt={conversation.name} style={{ width: 50, height: 50 }} />
       ) : (
-        <div className="image-placeholder">Loading...</div> // Consider adding a more stylistic placeholder here
+        <div className="image-placeholder">Loading...</div> 
       )}
     </div>
     <div className="chat-info">
@@ -17,7 +17,7 @@ const ConversationItem = ({ conversation, onClick, imageUrl }) => (
       <p className="chat-message">{conversation.lastMessage}</p>
     </div>
     <div className="chat-time">
-      {/* Ensure you have a function or method to format the lastUpdated time */}
+      
       <span>{formatDateOrTime(conversation.lastUpdated)}</span>
     </div>
   </div>

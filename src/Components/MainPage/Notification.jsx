@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import { fetchFriendRequests, acceptFriendRequest, declineFriendRequest } from "../../Services/Friendship/FriendshipService";
 import UserProfileImage from "../Common/ProfileImage";

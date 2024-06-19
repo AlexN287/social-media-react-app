@@ -46,7 +46,7 @@ const EditPostModal = ({ isOpen, onClose, post, onUpdate, mediaUrl }) => {
             {previewUrl && (
                 <img src={previewUrl} alt="Post" style={{ maxWidth: '100%' }} />
             )}
-            <FileInputField onChange={handleFileChange}/>
+            <FileInputField name="profileImage" accept="image/*" onChange={handleFileChange} />
             <Button onClick={handleSubmit} color="green">Save Changes</Button>
         </Modal>
     );

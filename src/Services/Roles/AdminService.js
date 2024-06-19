@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/admin'; // Replace with your actual API base URL
+const API_BASE_URL = 'http://localhost:8080/admin'; 
 
 export const checkIfUserIsAdmin = async (token) => {
     try {
@@ -12,7 +12,7 @@ export const checkIfUserIsAdmin = async (token) => {
         return response.data; // This will be the boolean value indicating if the user is an admin
     } catch (error) {
         if (error.response) {
-            // The request was made and the server responded with a status code that falls out of the range of 2xx
+            
             throw new Error(error.response.data || 'An unexpected error occurred');
         } else if (error.request) {
             // The request was made but no response was received

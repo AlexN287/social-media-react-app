@@ -2,7 +2,7 @@ import '../../Styles/Pages/Roles/AdminPage.css';
 
 import React, { useState, useEffect } from 'react';
 import Menu from '../../Components/MainPage/Menu';
-import { getAllUsersWithRoles, modifyUserRoles } from '../../Services/Roles/AdminService'; // Adjust the path as needed
+import { getAllUsersWithRoles, modifyUserRoles } from '../../Services/Roles/AdminService';
 import AdminSearchBar from '../../Components/AdminPage/AdminSearchBar';
 import UserItem from '../../Components/AdminPage/UserItem';
 import PaginationControls from '../../Components/Common/PaginationControls';
@@ -16,12 +16,12 @@ const AdminPage = () => {
     const [error, setError] = useState(null);
     const [messages, setMessages] = useState({});
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(1);
+    const [size, setSize] = useState(4);
     const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
         const fetchUsersWithRoles = async () => {
-            const token = localStorage.getItem('token'); // Assuming token is stored in local storage
+            const token = localStorage.getItem('token');
             if (token) {
                 try {
                     const response = await getAllUsersWithRoles(token, page, size);

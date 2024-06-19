@@ -4,6 +4,7 @@ import '../../Styles/Components/ConversationPage/MessageList.css';
 
 import { getLoggedUser } from '../../Services/User/UserService';
 import { fetchMessages } from '../../Services/Message/MessageService';
+import { fetchMessageMedia } from '../../Services/Conversation/ConversationService';
 
 const MessagesList = ({ conversationId, token, size, newMessage }) => {
     const [messages, setMessages] = useState([]);
@@ -18,7 +19,14 @@ const MessagesList = ({ conversationId, token, size, newMessage }) => {
         setLoading(true);
         try {
           const response = await fetchMessages(conversationId, token, page, size);
-          setMessages(prevMessages => [...prevMessages, ...response.messages]);
+          const messagesWithMedia = await Promise.all(response.messages.map(async (message) => {
+            if (message.filePath) {
+              const mediaUrl = await fetchMessageMedia(message.filePath, token);
+              return { ...message, mediaUrl };
+            }
+            return message;
+          }));
+          setMessages(prevMessages => [...prevMessages, ...messagesWithMedia]);
           setTotalPages(response.totalPages);
           setLoading(false);
         } catch (err) {
@@ -53,9 +61,20 @@ const MessagesList = ({ conversationId, token, size, newMessage }) => {
   
     useEffect(() => {
       if (newMessage) {
-        setMessages(prevMessages => [...prevMessages, newMessage]);
+        // Fetch media for the new message if it has a filePath
+        (async () => {
+          if (newMessage.filePath) {
+            try {
+              const mediaUrl = await fetchMessageMedia(newMessage.filePath, token);
+              newMessage.mediaUrl = mediaUrl;
+            } catch (error) {
+              console.error('Error fetching message media:', error);
+            }
+          }
+          setMessages(prevMessages => [...prevMessages, newMessage]);
+        })();
       }
-    }, [newMessage]);
+    }, [newMessage, token]);
   
     const lastMessageRef = useCallback(node => {
       if (loading) return;
@@ -75,32 +94,32 @@ const MessagesList = ({ conversationId, token, size, newMessage }) => {
     return (
       <div className="messages-list">
         {messages.map((message, index) => {
-          if (index === messages.length - 1) {
-            return (
-              <div ref={lastMessageRef} key={index} className="message-block">
-                <div className='message-timestamp'>
-                  {formatDateOrTime(message.timestamp)}
-                </div>
-                <div className={`message ${message.senderId === loggedInUser?.id ? 'you' : 'them'}`}>
-                  <span>{message.content}</span>
-                </div>
+          const isLastMessage = index === messages.length - 1;
+          const MessageContent = () => (
+            <div className={`message ${message.senderId === loggedInUser?.id ? 'you' : 'them'}`}>
+              <span>{message.content}</span>
+              {message.mediaUrl && (
+                message.mediaUrl.endsWith('.mp4') ? (
+                  <video src={message.mediaUrl} controls style={{ maxWidth: '100%' }} />
+                ) : (
+                  <img src={message.mediaUrl} alt="Message media" style={{ maxWidth: '100%' }} />
+                )
+              )}
+            </div>
+          );
+  
+          return (
+            <div ref={isLastMessage ? lastMessageRef : null} key={index} className="message-block">
+              <div className='message-timestamp'>
+                {formatDateOrTime(message.timestamp)}
               </div>
-            );
-          } else {
-            return (
-              <div key={index} className="message-block">
-                <div className='message-timestamp'>
-                  {formatDateOrTime(message.timestamp)}
-                </div>
-                <div className={`message ${message.senderId === loggedInUser?.id ? 'you' : 'them'}`}>
-                  <span>{message.content}</span>
-                </div>
-              </div>
-            );
-          }
+              <MessageContent />
+            </div>
+          );
         })}
       </div>
     );
   };
   
   export default MessagesList;
+  

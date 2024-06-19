@@ -1,12 +1,12 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080'; // Update to match your actual API base URL
+const API_BASE_URL = 'http://localhost:8080'; 
 
 export const getLikesCount = async (postId, token) => {
     try {
         const response = await axios.get(`${API_BASE_URL}/post/${postId}/likes/count`, {
             headers: {
-                'Authorization': `Bearer ${token}` // Assuming you are using Bearer token authentication
+                'Authorization': `Bearer ${token}`
             }
         });
         return response.data; // Returns the count of likes
@@ -21,7 +21,7 @@ export const addLike = async (postId, token) => {
         const response = await axios.post(`${API_BASE_URL}/like/${postId}`, {}, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
-        return response.data; // Assuming the backend returns the like object
+        return response.data;
     } catch (error) {
         console.error('Error adding like', error);
         throw error;

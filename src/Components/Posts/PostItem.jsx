@@ -36,6 +36,7 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
     const [showCommentsModal, setShowCommentsModal] = useState(false);
     const [showEditPostModal, setShowEditPostModal] = useState(false);
     const [showReportModal, setShowReportModal] = useState(false);
+    const [mediaType, setMediaType] = useState('');
     const location = useLocation();
 
     const toggleCommentsModal = () => setShowCommentsModal(!showCommentsModal);
@@ -55,8 +56,10 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
             setMediaLoading(true);
             try {
                 if (post.content.filePath != null) {
-                    //const mediaUrl = await fetchPostMedia(post.id, token); // Assuming this method handles cases where there is no media and returns null or an appropriate URL.
+                    const mediaUrl = await fetchPostMedia(post.id, token); // Assuming this method handles cases where there is no media and returns null or an appropriate URL.
+                    const mediaType = post.content.filePath.split('.').pop();
                     setMediaUrl(mediaUrl);
+                    setMediaType(mediaType);
                     console.log(mediaUrl);
                 }
             } catch (error) {
@@ -108,8 +111,7 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
 
     const handleDeletePost = async () => {
         try {
-            await deletePost(post.id, token);  // Assuming deletePost is an API call function
-            // Optionally, trigger a UI update or redirect
+            await deletePost(post.id, token);  
             onDelete(post.id);
         } catch (error) {
             console.error('Failed to delete post:', error);
@@ -149,11 +151,16 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
             </div>
 
             <p>{content.textContent}</p>
-            {mediaUrl ? (
-                <img src={mediaUrl} alt="Post" style={{ maxWidth: '100%' }} />
-            ) : null
-            }
-
+            {mediaUrl && (
+                mediaType === 'mp4' ? (
+                    <video controls style={{ maxWidth: '100%' }}>
+                        <source src={mediaUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                ) : (
+                    <img src={mediaUrl} alt="Post" style={{ maxWidth: '100%' }} />
+                )
+            )}
 
 
             <div className='post-buttons-container'>
@@ -183,7 +190,7 @@ const PostItem = ({ post, onDelete, onUpdate }) => {
             <LikesModal
                 isOpen={showLikesModal}
                 onClose={closeLikesModal}
-                postId={post.id} // Assuming postId is available
+                postId={post.id} 
             />
 
             <EditPostModal

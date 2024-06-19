@@ -14,7 +14,7 @@ const CommentsModal = ({ isOpen, onClose, post, mediaUrl }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [error, setError] = useState(null);
-    //const { token } = useAuth(); // Assuming useAuth() provides the token
+    //const { token } = useAuth(); 
     const token = localStorage.getItem('token');
 
     useEffect(() => {

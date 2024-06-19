@@ -1,6 +1,7 @@
 import axios from 'axios';
+import eventBus from '../../Helper/EventBus';
 
-const API_BASE_URL = 'http://localhost:8080/conversation'; // Replace with your actual API base URL
+const API_BASE_URL = 'http://localhost:8080/conversation'; 
 
 export const getConversationMembers = async (conversationId, token) => {
   try {
@@ -110,4 +111,71 @@ export const fetchConversationImage = async (conversationId, token) => {
   }
 };
 
+export const fetchMessageMedia = async (filePath, token) => {
+  try {
+    const response = await axios({
+      url: `${API_BASE_URL}/media`,
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      params: {
+        filePath
+      },
+      responseType: 'blob'  // Important for handling binary data like images and videos
+    });
 
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    return url;
+  } catch (error) {
+    console.error('Error fetching message media:', error);
+    throw error;
+  }
+};
+
+export const fetchConversationMembers = async (conversationId, token) => {
+  try {
+      const response = await axios.get(`http://localhost:8080/conversation/${conversationId}/members`, {
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+          }
+      });
+
+      return response.data;
+  } catch (error) {
+      console.error('Failed to fetch members:', error.response ? error.response.data : error.message);
+      throw new Error('Failed to fetch members');
+  }
+};
+export const removeMemberFromConversation = async (conversationId, memberId, token) => {
+  try {
+      const response = await axios.delete(`http://localhost:8080/conversation/group/${conversationId}/members/remove/${memberId}`, {
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+      });
+      return response.data;
+  } catch (error) {
+      console.error('Failed to remove member:', error.response ? error.response.data : error.message);
+      throw error;
+  }
+};
+
+export const handleLeaveConversation = async (conversationId, token) => {
+  try {
+      await axios.delete(`http://localhost:8080/conversation/group/${conversationId}/leave`, {
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+          },
+      });
+      console.log("Left group successfully.");
+
+      // Emit an event indicating a conversation has been left
+      eventBus.emit('leftConversation', conversationId);
+  } catch (error) {
+      console.error('Error leaving the group:', error.response ? error.response.data : error.message);
+      throw error;
+  }
+};

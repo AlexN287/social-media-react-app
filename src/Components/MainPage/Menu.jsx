@@ -116,7 +116,7 @@ const Menu = () => {
             <Link to="/messages">
               <span className="icon" role="img" aria-label="Messages">✉️</span>
               {!isMenuCollapsed && 'Messages'}
-              <span className="notification-count">3</span>
+              {/* <span className="notification-count">3</span> */}
             </Link>
           </li>
           <li onClick={toggleNotifications}>

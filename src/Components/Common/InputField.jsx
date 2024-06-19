@@ -8,7 +8,7 @@ const InputField = ({ type, name, placeholder, value, onChange }) => (
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className="input-field" // Assuming Bootstrap or similar is being used
+      className="input-field" 
     />
   );
   

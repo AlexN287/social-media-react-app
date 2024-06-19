@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/post'; // Adjust based on your actual API endpoint
+const API_URL = 'http://localhost:8080/post'; 
 
 export function createPost(token, text, file = null) {
   const formData = new FormData();

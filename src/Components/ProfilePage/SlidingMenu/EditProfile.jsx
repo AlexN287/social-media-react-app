@@ -3,27 +3,10 @@ import axios from 'axios';
 
 
 import '../../../Styles/Components/ProfilePage/SlidingMenu/EditProfile.css';
+import { getLoggedUser } from '../../../Services/User/UserService';
 
-async function getLoggedUser(token) {
-    try {
-        const response = await fetch('http://localhost:8080/user/profile', {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        });
+import FileInputField from '../../Common/FileInputField';
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const user = await response.json();
-        return user;
-    } catch (error) {
-        console.error('Error fetching user profile:', error);
-    }
-}
 
 async function fetchUserProfileImage(userId, token) {
     try {
@@ -144,7 +127,10 @@ const EditProfile = ({ onSave, onClose }) => {
 
                 <label>
                     Profile Image:
-                    <input type="file" accept="image/*" onChange={handleFileChange} />
+                    <div className='update-profile-image-field'>
+                        <FileInputField name="profileImage" accept="image/*" onChange={handleFileChange} />
+                    </div>
+                    
                 </label>
 
                 <button className='submit-button' type="submit">Save Changes</button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../Styles/Components/MainPage/SearchBar.css'; // Ensure you have a CSS file for styling
+import '../../Styles/Components/MainPage/SearchBar.css'; 
 
 import { searchUsersAsAdmin } from '../../Services/Search/SearchService';
 

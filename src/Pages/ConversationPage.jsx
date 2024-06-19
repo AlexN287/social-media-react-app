@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../Styles/ConversationPage.css'; // Make sure to create a ChatPage.css file for styles
+import '../Styles/ConversationPage.css'; 
 
 import Menu from '../Components/MainPage/Menu';
 

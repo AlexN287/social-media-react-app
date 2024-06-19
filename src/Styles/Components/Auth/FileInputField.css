@@ -1,18 +1,36 @@
-.file-input-field{
-    min-height: 20px;
+.file-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Adjust the space between the file input and other elements */
+}
+
+.custom-file-input-button {
     border: 2px solid #4CAF50;
     border-radius: 4px;
-    padding: 5px;
-    background:none;
+    padding: 5px 10px;
+    background: none;
     cursor: pointer;
     color: white;
+    background-color: #4CAF50;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Space between button and file name */
 }
 
-.file-input-field:hover {
-    background: #2ecc71;
+.custom-file-input-button:hover {
+    background-color: #45a049;
 }
 
-.file-input-field:focus {
+.custom-file-input-button:focus {
     outline: none;
     border-color: #367c39;
+}
+
+.file-name {
+    color: white;
+    font-size: 14px;
+}
+
+.file-input-field {
+    display: none; /* Hide the actual file input */
 }

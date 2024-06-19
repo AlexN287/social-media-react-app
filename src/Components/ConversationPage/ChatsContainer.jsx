@@ -48,11 +48,11 @@ const ChatsContainer = ({ onSelectConversation }) => {
 
     fetchConversationsList(token).then(conversations => {
       setConversations(conversations);
-      // conversations.forEach(conversation => {
-      //   fetchConversationImage(conversation.id, token).then(imageUrl => {
-      //     setConversationImages(prevImages => ({ ...prevImages, [conversation.id]: imageUrl }));
-      //   });
-      // });
+      conversations.forEach(conversation => {
+        fetchConversationImage(conversation.id, token).then(imageUrl => {
+          setConversationImages(prevImages => ({ ...prevImages, [conversation.id]: imageUrl }));
+        });
+      });
     });
   }, [token]);
 
@@ -135,7 +135,7 @@ const ChatsContainer = ({ onSelectConversation }) => {
             key={conversation.id}
             conversation={conversation}
             onClick={() => onSelectConversation(conversation, conversationImages[conversation.id])}
-            //imageUrl={conversationImages[conversation.id]}
+            imageUrl={conversationImages[conversation.id]}
           />
         ))}
       </div>

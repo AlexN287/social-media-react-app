@@ -1,5 +1,4 @@
 import React from 'react';
-import UserProfileImage from '../Common/ProfileImage'; // Adjust the path as needed
 import '../../Styles/Components/ModeratorPage/ReportList.css';
 import { formatDateOrTime } from '../../Helper/Util';
 import Button from '../Common/Button';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/comment'; // Update to match your actual API base URL
+const API_BASE_URL = 'http://localhost:8080/comment'; 
 
 export const getCommentsCount = async (postId, token) => {
     try {
@@ -54,7 +54,7 @@ export const deleteComment = async (commentId, token) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-        return response.data;  // You might return the response or handle it according to your needs
+        return response.data;  
     } catch (error) {
         console.error('Failed to delete comment:', error);
         if (error.response) {

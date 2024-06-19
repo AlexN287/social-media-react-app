@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/friendsList'; // Base URL for your API
+const API_URL = 'http://localhost:8080/friendsList'; 
 
 // Function to fetch the number of friends for a user
 export async function fetchNrOfFriends(userId, token) {

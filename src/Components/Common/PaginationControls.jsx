@@ -1,42 +1,6 @@
 import React from 'react';
 import '../../Styles/Components/Common/PaginationControls.css';
 
-// const PaginationControls = ({ totalPages, currentPage, onPageChange }) => {
-//     const handlePageChange = (newPage) => {
-//         if (newPage >= 0 && newPage < totalPages) {
-//             onPageChange(newPage);
-//         }
-//     };
-
-//     return (
-//         <div className="pagination-controls">
-//             <button
-//                 onClick={() => handlePageChange(currentPage - 1)}
-//                 disabled={currentPage === 0}
-//             >
-//                 Previous
-//             </button>
-//             {Array.from({ length: totalPages }, (_, index) => (
-//                 <button
-//                     key={index}
-//                     onClick={() => handlePageChange(index)}
-//                     disabled={index === currentPage}
-//                 >
-//                     {index + 1}
-//                 </button>
-//             ))}
-//             <button
-//                 onClick={() => handlePageChange(currentPage + 1)}
-//                 disabled={currentPage === totalPages - 1}
-//             >
-//                 Next
-//             </button>
-//         </div>
-//     );
-// };
-
-// export default PaginationControls;
-
 const PaginationControls = ({ totalPages, currentPage, onPageChange }) => {
     const renderPageNumbers = () => {
         const pageNumbers = [];

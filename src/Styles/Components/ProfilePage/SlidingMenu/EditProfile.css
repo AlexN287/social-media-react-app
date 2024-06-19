@@ -44,7 +44,7 @@
     background: #e10416;
 }
 
-.edit-profile-form [type="file"], .edit-profile-form [type="text"]{
+.edit-profile-form [type="text"]{
     border: 0;
     background: none;
     display: block;
@@ -77,6 +77,10 @@
     font-size: medium;
     color: #fff;
     margin-bottom: 20px;
+}
+
+.update-profile-image-field{
+    margin-top: 10px;
 }
 
 .error-message {

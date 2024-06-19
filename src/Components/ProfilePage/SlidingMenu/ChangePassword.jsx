@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import '../../../Styles/Components/ProfilePage/SlidingMenu/ChangePassword.css';
 
+import { changeUserPassword } from '../../../Services/User/UserService';
+
 const ChangePassword = ({ onSave, onClose }) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -20,17 +22,13 @@ const ChangePassword = ({ onSave, onClose }) => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8080/user/changePassword', passwordChangeRequest, {
-                headers: {
-                    'Authorization': `Bearer ${jwtToken}`
-                },
-            });
+            const responseMessage = await changeUserPassword(jwtToken, passwordChangeRequest);
 
-            setMessage(response.data); // Set success message
+            setMessage(responseMessage); // Set success message
+            onSave(); // Call onSave callback if needed
             onClose(); // Optionally close the form/modal if needed
         } catch (error) {
-            console.error('Error changing password:', error.response ? error.response.data : error);
-            setMessage(error.response && error.response.data ? error.response.data : 'An error occurred while changing the password.'); // Set error message
+            setMessage(error.message); // Set error message
         }
     };
 

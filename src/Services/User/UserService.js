@@ -88,3 +88,19 @@ export const fetchConnectedFriends = async (token) => {
         throw new Error('Failed to fetch connected friends'); // Throw an error to be handled by the caller
     }
 };
+
+export const changeUserPassword = async (token, passwordChangeRequest) => {
+    try {
+        const response = await axios.post(`${API_BASE_URL}/changePassword`, passwordChangeRequest, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error('Error changing password:', error.response ? error.response.data : error.message);
+        throw new Error(error.response && error.response.data ? error.response.data : 'An error occurred while changing the password.');
+    }
+};

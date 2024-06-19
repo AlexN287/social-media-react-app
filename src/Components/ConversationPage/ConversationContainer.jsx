@@ -4,11 +4,9 @@ import ShowMembersModal from './ShowMembersModel';
 import '../../Styles/Components/ConversationPage/ConversationContainer.css';
 import AddMembersModal from './AddMembersModal';
 import MessagesList from './MessageList';
-import { formatDateOrTime } from '../../Helper/Util';
 import { useWebSocket } from '../../Context/WebSocketContext';
-import { fetchMessages } from '../../Services/Message/MessageService';
-import { useNavigate } from 'react-router-dom';
 import { getConversationMembers } from '../../Services/Conversation/ConversationService';
+import { fetchMessageMedia } from '../../Services/Conversation/ConversationService';
 
 import { useCallInvitation } from '../../Context/CallInvitationContext';
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
@@ -27,6 +25,7 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
   const observer = useRef();
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState(null);
+  const [file, setFile] = useState(null);
 
   const [members, setMembers] = useState([]);
 
@@ -73,35 +72,84 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
     // Subscribe to the WebSocket messages for the selected conversation
     const subscription = client.subscribe(`/topic/conversations/${selectedConversationId}`, (msg) => {
       const receivedMessage = JSON.parse(msg.body);
-      setNewMessage(receivedMessage);
-      // Use your event bus or any other state management as needed
-      eventBus.emit('updateLastMessage', {
-        conversationId: receivedMessage.conversationId,
-        lastMessage: receivedMessage.content,
-        lastUpdated: new Date().toISOString()
-      });
+  
+      // IIFE to handle async logic
+      (async () => {
+        if (receivedMessage.filePath) {
+          // Fetch the media URL if the message contains a file path
+          try {
+            const mediaUrl = await fetchMessageMedia(receivedMessage.filePath, token);
+            receivedMessage.mediaUrl = mediaUrl;
+          } catch (error) {
+            console.error('Error fetching message media:', error);
+          }
+        }
+  
+        setNewMessage(receivedMessage);
+        // Use your event bus or any other state management as needed
+        eventBus.emit('updateLastMessage', {
+          conversationId: receivedMessage.conversationId,
+          lastMessage: receivedMessage.content,
+          lastUpdated: new Date().toISOString(),
+        });
+      })();
     });
-
+  
     // Clean up the subscription when component unmounts or dependencies change
     return () => {
       subscription.unsubscribe();
     };
-  }, [client, selectedConversationId]); // dependencies include client and selectedConversationId
+  }, [client, selectedConversationId, token]);// dependencies include client and selectedConversationId
 
   // Handle sending new messages
-  const handleSendMessage = (event) => {
+  const handleSendMessage = async (event) => {
     event.preventDefault();
-    if (messageContent.trim() !== '') {
-      sendMessage(`/app/chat/${selectedConversationId}`, {
-        senderId: loggedInUser?.id, // Sending the logged-in user's ID
-        conversationId: selectedConversationId, // The conversation ID
-        content: messageContent, // The message content
-        type: "CHAT", // Message type
-      });
+
+    let filePath = '';
+
+    if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('conversationId', selectedConversationId);
+        formData.append('senderId', loggedInUser?.id);
+        formData.append('textContent', messageContent); // Include text content
+
+        try {
+            const response = await fetch('http://localhost:8080/conversation/uploadFile', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Parse the JSON response
+                filePath = data.filePath; // Get the file path from the response
+                setFile(null);
+            } else {
+                console.error('Failed to upload file');
+                return; // Exit the function if the file upload fails
+            }
+        } catch (error) {
+            console.error('Failed to upload file', error);
+            return; // Exit the function if the file upload fails
+        }
     }
 
+    sendMessage(`/app/chat/${selectedConversationId}`, {
+        senderId: loggedInUser?.id,
+        conversationId: selectedConversationId,
+        content: messageContent,
+        filePath: filePath, // Set the file path if available
+        type: file ? 'FILE' : 'CHAT',
+    });
+
     setMessageContent('');
-  };
+};
+
+
+  
 
   useEffect(() => {
     
@@ -137,6 +185,10 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
     .catch((err) => {
       console.warn(err);
     });
+  };
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
   };
 
   return (
@@ -181,6 +233,7 @@ const ConversationContainer = ({ token, selectedConversationId, currentConversat
       <form className="conversation-input" onSubmit={handleSendMessage}>
         <input type="text" placeholder="Write a message ..." value={messageContent} onChange={(e) => setMessageContent(e.target.value)} />
         <button type="submit">Send</button>
+        <input type="file" onChange={handleFileChange} />
       </form>
     </div>
   );

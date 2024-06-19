@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/blockList'; // Adjust this to your actual API base URL
+const API_BASE_URL = 'http://localhost:8080/blockList'; 
 
 export const checkIfUserIsBlockedBy = async (token, otherUserId) => {
     try {

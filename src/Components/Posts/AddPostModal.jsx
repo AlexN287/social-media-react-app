@@ -39,7 +39,7 @@ const AddPostModal = ({ isOpen, onClose }) => {
       onClose();
     }} header="Add a new post">
       <AutoResizingTextarea text={text} onChange={(e) => setText(e.target.value)} />
-      <FileInputField name="post" accept="image/*" onChange={e => setFile(e.target.files[0])} />
+      <FileInputField name="post" accept="image/*,video/*" onChange={e => setFile(e.target.files[0])} />
       <Button color="green" onClick={handleSubmit}>Submit Post</Button>
       {message && <MessageBanner message={message} type={messageType} />}
     </Modal>

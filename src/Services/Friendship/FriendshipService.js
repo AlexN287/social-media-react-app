@@ -25,7 +25,7 @@ export async function sendFriendRequest(token, senderId, receiverId) {
     const body = {
         sender: { id: senderId },
         receiver: { id: receiverId },
-        status: "PENDING" // Assuming you have a status field to indicate the request state
+        status: "PENDING" 
     };
 
     try {
@@ -40,8 +40,7 @@ export async function sendFriendRequest(token, senderId, receiverId) {
     } catch (error) {
         console.error('Error sending friend request:', error);
         if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
+           
             throw new Error(`HTTP error! status: ${error.response.status}`);
         } else if (error.request) {
             // The request was made but no response was received
